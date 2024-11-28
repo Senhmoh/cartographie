@@ -1,0 +1,65 @@
+import React, { useRef, useEffect, useState } from 'react';
+import './House.css';
+
+function House({ selected, onSelect }) {
+    const [imageWidth, setImageWidth] = useState(0);
+    const imageRef = useRef();
+
+    // Mettre à jour la largeur de l'image pour recalculer les annotations
+    useEffect(() => {
+        const updateWidth = () => {
+            if (imageRef.current) {
+                setImageWidth(imageRef.current.offsetWidth);
+            }
+        };
+
+        updateWidth();
+        window.addEventListener('resize', updateWidth);
+        return () => window.removeEventListener('resize', updateWidth);
+    }, []);
+
+    const components = [
+        { name: 'Charpente - Toiture', top: '20%', left: '60%' },
+        { name: 'Façades - Murs extérieurs', top: '40%', left: '30%' },
+        { name: 'Murs mitoyens', top: '45%', left: '60%' },
+        { name: 'Murs porteurs intérieurs', top: '55%', left: '50%' },
+        { name: 'Dalles - Planchers', top: '90%', left: '40%' },
+        { name: 'Escaliers', top: '85%', left: '50%' },
+    ];
+
+    return (
+        <div className="house-container position-relative text-center my-4">
+            {/* Image de la maison */}
+            <img
+                src="/images/image-removebg-preview.png"
+                alt="Maison"
+                className="house-image img-fluid mx-auto d-block"
+                ref={imageRef}
+            />
+
+            {/* Annotations */}
+            {components.map((component, index) => (
+                <div
+                    key={index}
+                    className={`annotation position-absolute ${
+                        selected === component.name ? 'selected' : ''
+                    }`}
+                    style={{
+                        top: component.top,
+                        left: component.left,
+                        transform: 'translate(-50%, -50%)',
+                    }}
+                    onClick={() => {
+                        const newSelected =
+                            selected === component.name ? null : component.name;
+                        onSelect(newSelected);
+                    }}
+                >
+                    {component.name}
+                </div>
+            ))}
+        </div>
+    );
+}
+
+export default House;
