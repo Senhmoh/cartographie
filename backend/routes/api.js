@@ -6,6 +6,32 @@ import Impact from '../models/Impact.js';
 
 const router = express.Router();
 
+// Ajouter un nouvel impact
+router.post('/impacts', async (req, res) => {
+  try {
+    const { impact, importance, metier, composante, thematique } = req.body;
+
+    // Validation des champs
+    if (!impact || !importance || !metier || !composante || !thematique) {
+      return res.status(400).json({ message: 'Tous les champs sont obligatoires.' });
+    }
+
+    // Création de l'impact
+    const newImpact = await Impact.create({
+      impact,
+      importance,
+      metier,
+      composante,
+      thematique,
+    });
+
+    res.status(201).json(newImpact);
+  } catch (error) {
+    console.error('Erreur lors de l\'ajout d\'un impact :', error);
+    res.status(500).json({ message: 'Erreur interne du serveur.' });
+  }
+});
+
 // Récupérer tous les métiers
 router.get('/metiers', async (req, res) => {
   console.log("Route '/metiers' appelée");

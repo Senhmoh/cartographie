@@ -6,8 +6,8 @@ import Metiers from '../Metiers/Metiers';
 import House from '../House/House';
 import ImpactsTable from '../ImpactsTable/ImpactsTable';
 
-const App = () => {
-    const [selectedThematiqueId, setSelectedThematiqueId] = useState(null);
+const Home = () => {
+    const [selectedThematiqueIds, setSelectedThematiqueIds] = useState([[]]);
     const [selectedMetierId, setSelectedMetierId] = useState(null);
     const [selectedComposanteId, setSelectedComposanteId] = useState(null);
 
@@ -47,51 +47,35 @@ const App = () => {
         }
     ];
 
-    const getImpact = () => {
-        const impact = impacts.find(
-            (i) =>
-                i.metierId === selectedMetierId &&
-                i.thematiqueId === selectedThematiqueId &&
-                i.composanteId === selectedComposanteId
-        );
-    
-        if (!impact) return null;
-    
-        const metierNom = metiers.find((m) => m.id === selectedMetierId)?.nom || '';
-        const thematiqueNom = thematiques.find((t) => t.id === selectedThematiqueId)?.nom || '';
-        const composanteNom = composantes.find((c) => c.id === selectedComposanteId)?.nom || '';
-        const descriptions = impact.descriptions || []; // Liste vide si undefined
-    
-        return {
-            metierNom,
-            thematiqueNom,
-            composanteNom,
-            descriptions,
-        };
-    };
-    
-    
+    const getImpacts = () => {
+      return impacts.filter(
+          (impact) =>
+              selectedThematiqueIds.includes(impact.thematiqueId) &&
+              (!selectedMetierId || impact.metierId === selectedMetierId) &&
+              (!selectedComposanteId || impact.composanteId === selectedComposanteId)
+      );
+  };
 
-    return (
-        <div>
-            <div className="container">
-                <div className="row justify-content-center align-items-center my-3">
-                    <div className="col-6 col-sm-5 col-md-4">
-                        <Thematiques onThematiqueSelect={(id) => setSelectedThematiqueId(id)} />
-                    </div>
-                    <div className="col-6 col-sm-5 col-md-4">
-                        <Metiers onMetierSelect={(id) => setSelectedMetierId(id)} />
-                    </div>
-                </div>
+  return (
+      <div>
+          <div className="container">
+              <div className="row justify-content-center align-items-center my-3">
+                  <div className="col-6 col-sm-5 col-md-4">
+                      <Thematiques onThematiqueSelect={(ids) => setSelectedThematiqueIds(ids)} />
+                  </div>
+                  <div className="col-6 col-sm-5 col-md-4">
+                      <Metiers onMetierSelect={(id) => setSelectedMetierId(id)} />
+                  </div>
+              </div>
 
-                <House onComposanteSelect={(id) => setSelectedComposanteId(id)} />
+              <House onComposanteSelect={(id) => setSelectedComposanteId(id)} />
 
-                <div className="mt-4">
-                    <ImpactsTable impact={getImpact()} />
-                </div>
-            </div>
-        </div>
-    );
+              <div className="mt-4">
+                  <ImpactsTable impacts={getImpacts()} />
+              </div>
+          </div>
+      </div>
+  );
 };
 
-export default App;
+export default Home;

@@ -9,17 +9,18 @@ const ImpactsTable = ({ impacts }) => {
                 impacts.map((impact, index) => (
                     <div key={index} className="impact-card">
                         <div className="impact-header">
-                            <span className="impact-meta"><strong>Métier :</strong> {impact.metierId}</span>
-                            <span className="impact-meta"><strong>Thématique :</strong> {impact.thematiqueId}</span>
-                            <span className="impact-meta"><strong>Composante :</strong> {impact.composanteId}</span>
+                            <span className="impact-meta"><strong>Métier ID :</strong> {impact.metier}</span>
+                            <span className="impact-meta"><strong>Thématique ID :</strong> {impact.thematique}</span>
+                            <span className="impact-meta"><strong>Composante ID :</strong> {impact.composante}</span>
                         </div>
                         <div className="impact-descriptions">
-                            {impact.descriptions.map((desc, idx) => (
-                                <div key={idx} className="impact-item">
-                                    <span className="impact-icon">✔️</span>
-                                    <p>{desc}</p>
-                                </div>
-                            ))}
+                            <div className="impact-item">
+                                <span className="impact-icon">✔️</span>
+                                <p>{impact.impact}</p>
+                            </div>
+                        </div>
+                        <div className="impact-importance">
+                            <strong>Importance :</strong> {impact.importance}
                         </div>
                     </div>
                 ))

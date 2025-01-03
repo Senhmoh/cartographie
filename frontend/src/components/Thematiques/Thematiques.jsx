@@ -3,13 +3,14 @@ import { Dropdown, DropdownButton, Badge } from 'react-bootstrap';
 
 const Thematiques = ({ onThematiqueSelect }) => {
     const thematiques = [
-        { id: 1, nom: 'Stabilité' },
-        { id: 2, nom: 'Durabilité & Circularité' },
-        { id: 3, nom: 'Énergie & Confort' },
-        { id: 4, nom: 'Étanchéité air-eau' },
-        { id: 5, nom: 'Acoustique' },
-        { id: 6, nom: 'Pathologies' },
-        { id: 7, nom: 'Patrimoine' },
+        { id: 1, nom: "Techniques de mise en œuvre" },
+        { id: 2, nom: "Durabilité / Construction durable / Circularité / Environnement" },
+        { id: 3, nom: "Performance thermique / Energie / Isolation / Confort" },
+        { id: 4, nom: "Etanchéité à l'air, à l'eau, à la vapeur d'eau" },
+        { id: 5, nom: "Acoustique (petites copropriétés)" },
+        { id: 6, nom: "Stabilité" },
+        { id: 7, nom: "Pathologies" },
+        { id: 8, nom: "Patrimoine / Restauration" },
     ];
 
     const [selectedThematiques, setSelectedThematiques] = useState([]);

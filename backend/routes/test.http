@@ -1,0 +1,11 @@
+### Ajouter un impact
+POST http://localhost:3000/api/impacts
+Content-Type: application/json
+
+{
+  "impact": "Identifier le potentiel des matériaux\nEtablir un inventaire des réemployables (briques, bois, revêtement ext.)\nEffectuer un tri sélectif à la source (organisation, localisation, suivi)",
+  "importance": 2,
+  "metier": 1,
+  "composante": 1,
+  "thematique": 2
+}

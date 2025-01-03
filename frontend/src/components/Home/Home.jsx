@@ -1,81 +1,79 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Thematiques from '../Thematiques/Thematiques';
 import Metiers from '../Metiers/Metiers';
 import House from '../House/House';
 import ImpactsTable from '../ImpactsTable/ImpactsTable';
+import { fetchImpacts } from '../../services/api';
 
 const Home = () => {
-    const [selectedThematiqueIds, setSelectedThematiqueIds] = useState([[]]);
+    const [selectedThematiqueIds, setSelectedThematiqueIds] = useState([]);
     const [selectedMetierId, setSelectedMetierId] = useState(null);
     const [selectedComposanteId, setSelectedComposanteId] = useState(null);
+    const [allImpacts, setAllImpacts] = useState([]); // Tous les impacts récupérés
+    const [filteredImpacts, setFilteredImpacts] = useState([]); // Impacts après filtrage
+    const [loading, setLoading] = useState(false);
 
-    const metiers = [
-        { id: 1, nom: 'Maçon/Facadier' },
-        { id: 2, nom: 'Menuisier' },
-    ];
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            try {
+                // Récupérer tous les impacts
+                const data = await fetchImpacts();
+                setAllImpacts(data); // Stocker tous les impacts
+            } catch (error) {
+                console.error("Erreur lors de la récupération des impacts :", error);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    const thematiques = [
-        { id: 1, nom: 'Stabilité' },
-        { id: 2, nom: 'Durabilité & Circularité' },
-    ];
+        fetchData();
+    }, []);
 
-    const composantes = [
-        { id: 1, nom: 'Façades - Murs extérieurs' },
-        { id: 2, nom: 'Charpente - Toiture' },
-    ];
-
-    const impacts = [
-        {
-            metierId: 1,
-            thematiqueId: 1,
-            composanteId: 1,
-            descriptions : [
-                'Vérifier les éventuelles fissures…',               
-                'Vérifier la résistance si modification des charges ou percement des baies'
-            ]
-        },
-        {
-            metierId: 2,
-            thematiqueId: 2,
-            composanteId: 2,
-            descriptions : [
-                'Opter pour des matériaux durables (de réemploi) et à faible impact environnemental',
-                'Prévoir des connexions accessibles et réversibles pour les éléments de cloisonnement, faux-plafond et faux-plancher'
-            ]
+    // Appliquer les filtres
+    useEffect(() => {
+        if (
+            selectedThematiqueIds.length > 0 &&
+            selectedMetierId !== null &&
+            selectedComposanteId !== null
+        ) {
+            const filtered = allImpacts.filter((impact) =>
+                selectedThematiqueIds.includes(impact.thematique) &&
+                impact.metier === selectedMetierId &&
+                impact.composante === selectedComposanteId
+            );
+            setFilteredImpacts(filtered);
+        } else {
+            setFilteredImpacts([]); // Réinitialiser si les filtres ne sont pas tous appliqués
         }
-    ];
+    }, [selectedThematiqueIds, selectedMetierId, selectedComposanteId, allImpacts]);
 
-    const getImpacts = () => {
-      return impacts.filter(
-          (impact) =>
-              selectedThematiqueIds.includes(impact.thematiqueId) &&
-              (!selectedMetierId || impact.metierId === selectedMetierId) &&
-              (!selectedComposanteId || impact.composanteId === selectedComposanteId)
-      );
-  };
+    return (
+        <div>
+            <div className="container">
+                <div className="row justify-content-center align-items-center my-3">
+                    <div className="col-6 col-sm-5 col-md-4">
+                        <Thematiques onThematiqueSelect={(ids) => setSelectedThematiqueIds(ids)} />
+                    </div>
+                    <div className="col-6 col-sm-5 col-md-4">
+                        <Metiers onMetierSelect={(id) => setSelectedMetierId(id)} />
+                    </div>
+                </div>
 
-  return (
-      <div>
-          <div className="container">
-              <div className="row justify-content-center align-items-center my-3">
-                  <div className="col-6 col-sm-5 col-md-4">
-                      <Thematiques onThematiqueSelect={(ids) => setSelectedThematiqueIds(ids)} />
-                  </div>
-                  <div className="col-6 col-sm-5 col-md-4">
-                      <Metiers onMetierSelect={(id) => setSelectedMetierId(id)} />
-                  </div>
-              </div>
+                <House onComposanteSelect={(id) => setSelectedComposanteId(id)} />
 
-              <House onComposanteSelect={(id) => setSelectedComposanteId(id)} />
-
-              <div className="mt-4">
-                  <ImpactsTable impacts={getImpacts()} />
-              </div>
-          </div>
-      </div>
-  );
+                <div className="mt-4">
+                    {loading ? (
+                        <p>Chargement des impacts...</p>
+                    ) : (
+                        <ImpactsTable impacts={filteredImpacts} />
+                    )}
+                </div>
+            </div>
+        </div>
+    );
 };
 
 export default Home;
