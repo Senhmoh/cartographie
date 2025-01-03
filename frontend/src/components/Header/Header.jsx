@@ -3,7 +3,7 @@ import { Container, Navbar } from 'react-bootstrap';
 
 const Header = () => {
     return (
-        <Navbar bg="light" expand="lg" className="py-2">
+        <Navbar expand="lg" style={{ backgroundColor: "#ebe6e1" }} className="py-2">
             <Container className="d-flex align-items-center">
                 {/* Logo légèrement agrandi et aligné à gauche */}
                 <Navbar.Brand href="#home" className="me-auto">
@@ -17,10 +17,14 @@ const Header = () => {
                         }}
                     />
                 </Navbar.Brand>
-                {/* Boutons de langue */}
-                <div className="d-flex">
-                    <button className="btn btn-outline-primary me-2">FR</button>
-                </div>
+               {/* Boutons */}
+<div className="d-flex button-group">
+  <button className="btn custom-btn custom-btn-green">
+    <i className="bi bi-person"></i>
+  </button>
+  <button className="btn custom-btn custom-btn-gray-filled">FR</button>
+</div>
+
             </Container>
         </Navbar>
     );

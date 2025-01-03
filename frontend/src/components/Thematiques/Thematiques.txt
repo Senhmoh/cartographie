@@ -1,0 +1,44 @@
+import React, { useState } from 'react';
+import { Dropdown, DropdownButton } from 'react-bootstrap';
+
+const Thematiques = ({ onThematiqueSelect }) => {
+    // Liste des thématiques avec des IDs
+    const thematiques = [
+        { id: 1, nom: 'Stabilité' },
+        { id: 2, nom: 'Durabilité & Circularité' },
+        { id: 3, nom: 'Énergie & Confort' },
+        { id: 4, nom: 'Étanchéité air-eau' },
+        { id: 5, nom: 'Acoustique' },
+        { id: 6, nom: 'Pathologies' },
+        { id: 7, nom: 'Patrimoine' },
+    ];
+
+    const [selectedThematique, setSelectedThematique] = useState('Thématiques');
+
+    // Gestion de la sélection
+    const handleSelect = (thematique) => {
+        setSelectedThematique(thematique.nom); // Afficher le nom sélectionné
+        if (onThematiqueSelect) {
+            onThematiqueSelect(thematique.id); // Passer l'ID au parent
+        }
+    };
+
+    return (
+        <DropdownButton
+            title={selectedThematique}
+            variant="outline-secondary"
+            className="w-100"
+        >
+            {thematiques.map((thematique) => (
+                <Dropdown.Item 
+                    key={thematique.id} 
+                    onClick={() => handleSelect(thematique)}
+                >
+                    {thematique.nom}
+                </Dropdown.Item>
+            ))}
+        </DropdownButton>
+    );
+};
+
+export default Thematiques;
