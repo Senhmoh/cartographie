@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 import Thematiques from '../Thematiques/Thematiques';
 import Metiers from '../Metiers/Metiers';
 import House from '../House/House';
@@ -11,17 +9,16 @@ const Home = () => {
     const [selectedThematiqueIds, setSelectedThematiqueIds] = useState([]);
     const [selectedMetierId, setSelectedMetierId] = useState(null);
     const [selectedComposanteId, setSelectedComposanteId] = useState(null);
-    const [allImpacts, setAllImpacts] = useState([]); // Tous les impacts récupérés
-    const [filteredImpacts, setFilteredImpacts] = useState([]); // Impacts après filtrage
+    const [allImpacts, setAllImpacts] = useState([]);
+    const [filteredImpacts, setFilteredImpacts] = useState({});
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                // Récupérer tous les impacts
                 const data = await fetchImpacts();
-                setAllImpacts(data); // Stocker tous les impacts
+                setAllImpacts(data);
             } catch (error) {
                 console.error("Erreur lors de la récupération des impacts :", error);
             } finally {
@@ -32,7 +29,6 @@ const Home = () => {
         fetchData();
     }, []);
 
-    // Appliquer les filtres
     useEffect(() => {
         if (
             selectedThematiqueIds.length > 0 &&
@@ -44,11 +40,27 @@ const Home = () => {
                 impact.metier === selectedMetierId &&
                 impact.composante === selectedComposanteId
             );
-            setFilteredImpacts(filtered);
+
+            const groupedImpacts = groupImpactsByThematique(filtered);
+            setFilteredImpacts(groupedImpacts);
         } else {
-            setFilteredImpacts([]); // Réinitialiser si les filtres ne sont pas tous appliqués
+            setFilteredImpacts({});
         }
     }, [selectedThematiqueIds, selectedMetierId, selectedComposanteId, allImpacts]);
+
+    const groupImpactsByThematique = (impacts) => {
+        const grouped = {};
+        impacts.forEach((impact) => {
+            const thematiqueId = impact.thematique;
+            if (!grouped[thematiqueId]) {
+                grouped[thematiqueId] = [];
+            }
+            if (!grouped[thematiqueId].find((i) => i.id_impact === impact.id_impact)) {
+                grouped[thematiqueId].push(impact);
+            }
+        });
+        return grouped;
+    };
 
     return (
         <div>
@@ -68,7 +80,7 @@ const Home = () => {
                     {loading ? (
                         <p>Chargement des impacts...</p>
                     ) : (
-                        <ImpactsTable impacts={filteredImpacts} />
+                        <ImpactsTable groupedImpacts={filteredImpacts} />
                     )}
                 </div>
             </div>

@@ -4,6 +4,7 @@ const { Client } = pkg;
 import cors from 'cors';
 import dotenv from 'dotenv';
 import apiRoutes from './routes/api.js';
+import authRoutes from './routes/auth.js';
 import sequelize from './config/database.js';
 
 dotenv.config();
@@ -38,6 +39,7 @@ app.use(express.json());
 
 // Routes API
 app.use('/api', apiRoutes);
+app.use('/api/auth', authRoutes);
 
 app.listen(PORT, () => {
   console.log(`Serveur démarré sur le port ${PORT}`);

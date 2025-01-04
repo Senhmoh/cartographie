@@ -1,26 +1,46 @@
 import React from "react";
 
-const ImpactsTable = ({ impacts }) => {
+// Liste statique des thématiques
+const thematiquesList = [
+    { id: 1, nom: "Techniques de mise en œuvre" },
+    { id: 2, nom: "Durabilité / Construction durable / Circularité / Environnement" },
+    { id: 3, nom: "Performance thermique / Energie / Isolation / Confort" },
+    { id: 4, nom: "Etanchéité à l'air, à l'eau, à la vapeur d'eau" },
+    { id: 5, nom: "Acoustique (petites copropriétés)" },
+    { id: 6, nom: "Stabilité" },
+    { id: 7, nom: "Pathologies" },
+    { id: 8, nom: "Patrimoine / Restauration" },
+];
+
+const ImpactsTable = ({ groupedImpacts }) => {
+    // Fonction pour trouver le nom d'une thématique à partir de son ID
+    const getThematiqueName = (id) => {
+        const thematique = thematiquesList.find((item) => item.id === parseInt(id, 10));
+        return thematique ? thematique.nom : "Thématique inconnue";
+    };
+
     return (
         <div className="impact-card-container">
-            <h4 className="impact-card-title">Liste des impacts</h4>
+            <h4 className="impact-card-title">Liste des impacts par thématique</h4>
             <div className="impact-card-line"></div>
-            {impacts.length > 0 ? (
-                impacts.map((impact, index) => (
-                    <div key={index} className="impact-card">
+            {Object.keys(groupedImpacts).length > 0 ? (
+                Object.entries(groupedImpacts).map(([thematiqueId, impacts]) => (
+                    <div key={thematiqueId} className="impact-card">
                         <div className="impact-header">
-                            <span className="impact-meta"><strong>Métier ID :</strong> {impact.metier}</span>
-                            <span className="impact-meta"><strong>Thématique ID :</strong> {impact.thematique}</span>
-                            <span className="impact-meta"><strong>Composante ID :</strong> {impact.composante}</span>
+                            <span className="impact-meta">
+                                <strong>Thématique :</strong> {getThematiqueName(thematiqueId)}
+                            </span>
                         </div>
                         <div className="impact-descriptions">
-                            <div className="impact-item">
-                                <span className="impact-icon">✔️</span>
-                                <p>{impact.impact}</p>
-                            </div>
-                        </div>
-                        <div className="impact-importance">
-                            <strong>Importance :</strong> {impact.importance}
+                            {impacts.map((impact) => (
+                                <div key={impact.id_impact} className="impact-item">
+                                    <span className="impact-icon">✔️</span>
+                                    <p>{impact.impact}</p>
+                                    <small>
+                                        <strong>Importance :</strong> {impact.importance}
+                                    </small>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 ))

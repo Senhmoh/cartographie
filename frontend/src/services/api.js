@@ -23,3 +23,21 @@ export const fetchImpacts = async (filters) => {
   const response = await api.get('/impacts', { params: filters });
   return response.data;
 };
+
+export const inscriptionUtilisateur = async (formData) => {
+  try {
+    const response = await api.post('/auth/inscription', formData);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: 'Erreur lors de l\'inscription.' };
+  }
+};
+
+export const connexionUtilisateur = async (formData) => {
+  try {
+    const response = await api.post('/auth/connexion', formData);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: 'Erreur lors de la connexion.' };
+  }
+};
