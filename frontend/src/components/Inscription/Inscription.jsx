@@ -1,67 +1,93 @@
 import React, { useState } from 'react';
-import { inscriptionUtilisateur } from '../../services/api';
+import { inscriptionUtilisateur } from '../../services/api'; // Import de l'API pour l'inscription
+import { useNavigate } from 'react-router-dom';
 
-const Inscription = () => {
-    const [formData, setFormData] = useState({ nom_utilisateur: '', email: '', mot_de_passe: '' });
-    const [message, setMessage] = useState('');
-    const [error, setError] = useState('');
+function SignupForm() {
+  const [formData, setFormData] = useState({ nom_utilisateur: '', email: '', mot_de_passe: '' });
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
+  // Gestion des champs du formulaire
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const data = await inscriptionUtilisateur(formData);
-            setMessage(data.message); // Message du backend
-            setError('');
-        } catch (err) {
-            setError(err.message || 'Une erreur est survenue.');
-            setMessage('');
-        }
-    };
+  // Soumission du formulaire
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await inscriptionUtilisateur(formData);
+      setIsSuccess(true); // Passe en mode "Succès"
+      setError('');
+    } catch (err) {
+      setError(err.message || 'Une erreur est survenue.');
+    }
+  };
 
-    return (
-        <div>
-            <h2>Inscription</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <input
-                        type="text"
-                        name="nom_utilisateur"
-                        placeholder="Nom d'utilisateur"
-                        value={formData.nom_utilisateur}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="Email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <input
-                        type="password"
-                        name="mot_de_passe"
-                        placeholder="Mot de passe"
-                        value={formData.mot_de_passe}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <button type="submit">S'inscrire</button>
+  // Gestion du bouton "Fermer"
+  const handleClose = () => {
+    navigate('/login'); // Redirige vers la page de connexion
+  };
+
+  return (
+    <div className="login-container">
+      <div className="login-card">
+        {!isSuccess ? (
+          <>
+            <h1 className="login-title gradient-text">Inscrivez-vous</h1>
+            <p className="login-subtitle">Créez votre compte pour accéder à l'application</p>
+            <form className="login-form" onSubmit={handleSubmit}>
+              <div className="input-group">
+                <input
+                  type="text"
+                  id="nom_utilisateur"
+                  name="nom_utilisateur"
+                  value={formData.nom_utilisateur}
+                  onChange={handleChange}
+                  required
+                />
+                <label htmlFor="nom_utilisateur">Nom d'utilisateur</label>
+              </div>
+              <div className="input-group">
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+                <label htmlFor="email">Adresse mail</label>
+              </div>
+              <div className="input-group">
+                <input
+                  type="password"
+                  id="mot_de_passe"
+                  name="mot_de_passe"
+                  value={formData.mot_de_passe}
+                  onChange={handleChange}
+                  required
+                />
+                <label htmlFor="mot_de_passe">Mot de passe</label>
+              </div>
+              <button type="submit" className="btn-submit gradient-btn">
+                Inscription
+              </button>
             </form>
-            {message && <p style={{ color: 'green' }}>{message}</p>}
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-        </div>
-    );
-};
+            {error && <p className="error-text">{error}</p>}
+          </>
+        ) : (
+          <>
+            <h1 className="success-title gradient-text">Inscription réussie</h1>
+            <button onClick={handleClose} className="btn-submit gradient-btn">
+              Fermer
+            </button>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
 
-export default Inscription;
+export default SignupForm;

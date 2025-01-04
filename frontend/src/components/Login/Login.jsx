@@ -64,7 +64,7 @@ function LoginForm() {
             Mot de passe oublié ?
           </a>
           <p className="signup-text">
-            Vous n'avez pas de compte ? <a href="#!">Inscription</a>
+            Vous n'avez pas de compte ? <a href="/inscription">Inscription</a>
           </p>
         </div>
       </div>
