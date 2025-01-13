@@ -41,3 +41,16 @@ export const connexionUtilisateur = async (formData) => {
     throw error.response?.data || { message: 'Erreur lors de la connexion.' };
   }
 };
+
+export const fetchUserChecklists = async (utilisateurId) => {
+  console.log("fetchUserChecklists appelé avec :", utilisateurId);
+  try {
+      const response = await axios.get(`http://localhost:3000/api/checklists?utilisateurId=${utilisateurId}`);
+      console.log("Données reçues par fetchUserChecklists :", response.data);
+      return response.data;
+  } catch (error) {
+      console.error("Erreur dans fetchUserChecklists :", error);
+      throw error;
+  }
+};
+

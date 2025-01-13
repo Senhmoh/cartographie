@@ -3,7 +3,7 @@ import Thematiques from '../Thematiques/Thematiques';
 import Metiers from '../Metiers/Metiers';
 import House from '../House/House';
 import ImpactsTable from '../ImpactsTable/ImpactsTable';
-import { fetchImpacts } from '../../services/api';
+import { fetchImpacts } from '../../services/api'; // Import des fonctions API
 
 const Home = () => {
     const [selectedThematiqueIds, setSelectedThematiqueIds] = useState([]);
@@ -13,6 +13,7 @@ const Home = () => {
     const [filteredImpacts, setFilteredImpacts] = useState({});
     const [loading, setLoading] = useState(false);
 
+    // Gestion des données d'impacts
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
@@ -29,6 +30,7 @@ const Home = () => {
         fetchData();
     }, []);
 
+    // Filtrage des impacts selon les sélections
     useEffect(() => {
         if (
             selectedThematiqueIds.length > 0 &&
@@ -48,6 +50,7 @@ const Home = () => {
         }
     }, [selectedThematiqueIds, selectedMetierId, selectedComposanteId, allImpacts]);
 
+    // Fonction pour regrouper les impacts par thématique
     const groupImpactsByThematique = (impacts) => {
         const grouped = {};
         impacts.forEach((impact) => {
@@ -62,8 +65,41 @@ const Home = () => {
         return grouped;
     };
 
+    // Fonction pour gérer la soumission de la checklist
+    const handleFillChecklist = async (selectedImpacts) => {
+        try {
+            const userId = 1; // Remplacez par la vraie ID utilisateur récupérée depuis le contexte ou l'authentification
+            const checklistData = { utilisateur: userId, impacts: selectedImpacts };
+
+            await saveChecklist(checklistData); // Appel API pour sauvegarder la checklist
+            alert('Checklist enregistrée avec succès !');
+        } catch (error) {
+            console.error('Erreur lors de l\'enregistrement de la checklist :', error);
+            alert('Une erreur est survenue lors de la sauvegarde.');
+        }
+    };
+
     return (
         <div>
+      <div className="home-banner">
+    <div className="banner-content">
+    <h1 className="banner-title">
+    <span className="gradient-text">PROFESSIONNEL</span> DE LA CONSTRUCTION ?
+</h1>
+
+        <div className="banner-box">
+            <p className="banner-text">
+                Explorez les impacts des rénovations sur les différentes composantes d'une maison, 
+                identifiez les thématiques clés liées à votre métier et découvrez comment optimiser 
+                vos choix pour un avenir durable.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+            
+            {/* Section avec container pour les filtres */}
             <div className="container">
                 <div className="row justify-content-center align-items-center my-3">
                     <div className="col-6 col-sm-5 col-md-4">
@@ -73,19 +109,23 @@ const Home = () => {
                         <Metiers onMetierSelect={(id) => setSelectedMetierId(id)} />
                     </div>
                 </div>
-
+    
                 <House onComposanteSelect={(id) => setSelectedComposanteId(id)} />
-
+    
                 <div className="mt-4">
                     {loading ? (
                         <p>Chargement des impacts...</p>
                     ) : (
-                        <ImpactsTable groupedImpacts={filteredImpacts} />
+                        <ImpactsTable
+                            groupedImpacts={filteredImpacts}
+                            onFillChecklist={handleFillChecklist}
+                        />
                     )}
                 </div>
             </div>
         </div>
-    );
+    );    
+    
 };
 
 export default Home;

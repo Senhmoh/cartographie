@@ -54,7 +54,7 @@ function LoginForm() {
             />
             <label htmlFor="password">Mot de passe</label>
           </div>
-          <button type="submit" className="btn-submit gradient-btn">
+          <button type="submit" className="btn-submit btn-submit">
             Connexion
           </button>
         </form>

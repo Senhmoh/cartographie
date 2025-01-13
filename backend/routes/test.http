@@ -29,4 +29,20 @@ Content-Type: application/json
   "mot_de_passe": "123456"
 }
 
+### Création d'une checklist
+POST http://localhost:3000/api/checklists
+Content-Type: application/json
+
+{
+  "utilisateur": 1,
+  "nom_checklist": "hey",
+  "impacts": [1, 2, 3, 4, 5]
+}
+
+### Récupérer les checklists d'un utilisateur
+GET http://localhost:3000/api/checklists?utilisateurId=1
+Content-Type: application/json
+
+
+
 

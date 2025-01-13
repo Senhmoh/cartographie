@@ -6,30 +6,20 @@ import dotenv from 'dotenv';
 import apiRoutes from './routes/api.js';
 import authRoutes from './routes/auth.js';
 import sequelize from './config/database.js';
+import './models/Associations.js'; // Charge les associations avant toute utilisation des modèles
 
 dotenv.config();
-
-const client = new Client({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  port: parseInt(process.env.DB_PORT, 10),
-});
 
 
 console.log('Début du test Sequelize');
 
-(async () => {
-  try {
-    await sequelize.authenticate();
+sequelize.authenticate()
+  .then(() => {
     console.log('Connexion réussie à la base de données Railway');
-  } catch (error) {
-    console.error('Erreur de connexion Sequelize :', error.message);
-  } finally {
-    console.log('Fin du test Sequelize');
-  }
-})();
+  })
+  .catch((err) => {
+    console.error('Erreur lors de la connexion à la base de données :', err);
+  });
 
 const app = express();
 const PORT = process.env.PORT || 3000;

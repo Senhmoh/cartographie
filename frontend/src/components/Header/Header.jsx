@@ -10,14 +10,14 @@ const Header = () => {
     return (
         <Navbar expand="lg" style={{ backgroundColor: "#ebe6e1" }} className="py-2">
             <Container className="d-flex align-items-center">
-                {/* Logo avec lien vers l'accueil */}
+                {/* Logo avec lien vers l'accueil ebe6e1*/}
                 <Navbar.Brand as={Link} to="/" className="me-auto">
                     <img
-                        src="/images/Renov’IMPACT (400 x 500 px) (400 x 300 px) (600 x 300 px).svg"
+                        src="/images/logo.svg"
                         alt="Renov'IMPACT Logo"
                         className="img-fluid"
                         style={{
-                            maxHeight: '60px',
+                            maxHeight: '80px',
                             width: 'auto',
                         }}
                     />
@@ -37,6 +37,13 @@ const Header = () => {
                             >
                                 <i className="bi bi-box-arrow-right"></i>
                             </button>
+                            <Link 
+                            to="/profil" 
+                            className="btn custom-btn custom-btn-green" 
+                            title="Profil"
+                        >
+                            <i class="bi bi-list-check"></i>
+                        </Link>
                         </>
                     ) : (
                         <Link 
@@ -61,3 +68,4 @@ const Header = () => {
 };
 
 export default Header;
+

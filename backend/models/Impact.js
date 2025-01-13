@@ -3,6 +3,7 @@ import sequelize from '../config/database.js';
 import ComposanteMaison from './Composante.js';
 import Thematique from './Thematique.js';
 import Metier from './Metier.js';
+import ChecklistImpacts from './ChecklistImpacts.js';
 
 const Impact = sequelize.define('Impact', {
   id_impact: {
@@ -30,8 +31,5 @@ const Impact = sequelize.define('Impact', {
   timestamps: false,
 });
 
-Impact.belongsTo(ComposanteMaison, { foreignKey: 'composante', onDelete: 'CASCADE' });
-Impact.belongsTo(Thematique, { foreignKey: 'thematique', onDelete: 'CASCADE' });
-Impact.belongsTo(Metier, { foreignKey: 'metier', onDelete: 'CASCADE' });
 
 export default Impact;

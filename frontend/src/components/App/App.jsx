@@ -6,6 +6,7 @@ import Home from '../Home/Home'; // La page principale
 import Login from '../Login/Login'; // La page de connexion
 import Ajout from '../Ajout/Ajout'; // La page d'ajout d'impact
 import Inscription from '../Inscription/Inscription';
+import Profil from '../Profil/Profil';
 import { AuthProvider } from '../../providers/AuthProvider';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
               <Route path="/login" element={<Login />} /> {/* Page Login */}
               <Route path="/inscription" element={<Inscription />} /> {/* Page Inscription */}
               <Route path="/ajout" element={<Ajout />} /> {/* Page Ajout */}
+              <Route path="/profil" element={<Profil />} />
             </Routes>
           </main>
           <Footer />

@@ -71,7 +71,7 @@ function SignupForm() {
                 />
                 <label htmlFor="mot_de_passe">Mot de passe</label>
               </div>
-              <button type="submit" className="btn-submit gradient-btn">
+              <button type="submit" className="btn-submit btn-submit">
                 Inscription
               </button>
             </form>
@@ -80,7 +80,7 @@ function SignupForm() {
         ) : (
           <>
             <h1 className="success-title gradient-text">Inscription réussie</h1>
-            <button onClick={handleClose} className="btn-submit gradient-btn">
+            <button onClick={handleClose} className="btn-submit btn-submit">
               Fermer
             </button>
           </>
