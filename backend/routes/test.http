@@ -21,6 +21,15 @@ Content-Type: application/json
 }
 
 ### Connexion d'un utilisateur
+POST https://cartographie-production.up.railway.app/api/auth/connexion
+Content-Type: application/json
+
+{
+  "email": "testuser@example.com",
+  "mot_de_passe": "123456"
+}
+
+### Connexion d'un utilisateur
 POST http://localhost:3000/api/auth/connexion
 Content-Type: application/json
 
