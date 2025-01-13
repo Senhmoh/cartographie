@@ -34,9 +34,9 @@ POST http://localhost:3000/api/checklists
 Content-Type: application/json
 
 {
-  "utilisateur": 1,
+  "utilisateur": 2,
   "nom_checklist": "hey",
-  "impacts": [1, 2, 3, 4, 5]
+  "impacts": [1]
 }
 
 ### Récupérer les checklists d'un utilisateur

@@ -30,11 +30,11 @@ const Thematiques = ({ onThematiqueSelect }) => {
     };
 
     return (
-        <div>
+        <div className="thematiques-container">
             <DropdownButton
                 title="Thématique"
                 variant="outline-secondary"
-                className="w-100 mb-2"
+                className="w-100 mb-2 dropdown-thematiques"
             >
                 {thematiques
                     .filter(t => !selectedThematiques.some(sel => sel.id === t.id))
@@ -48,12 +48,12 @@ const Thematiques = ({ onThematiqueSelect }) => {
                 ))}
             </DropdownButton>
 
-            <div>
+            <div className="selected-thematiques">
                 {selectedThematiques.map(thematique => (
                     <Badge 
                         key={thematique.id} 
                         bg="secondary" 
-                        className="me-2 mb-2" 
+                        className="thematique-badge me-2 mb-2"
                         onClick={() => handleRemove(thematique.id)}
                         style={{ cursor: 'pointer' }}
                     >

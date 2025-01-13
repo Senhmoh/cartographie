@@ -1,7 +1,8 @@
 import axios from 'axios';
 
+// Remplace l'URL statique par l'URL de la variable d'environnement
 const api = axios.create({
-  baseURL: 'http://localhost:3000/api'
+  baseURL: import.meta.env.VITE_BACKEND_URL // Charge l'URL depuis les variables d'environnement
 });
 
 export const fetchMetiers = async () => {
@@ -45,12 +46,11 @@ export const connexionUtilisateur = async (formData) => {
 export const fetchUserChecklists = async (utilisateurId) => {
   console.log("fetchUserChecklists appelé avec :", utilisateurId);
   try {
-      const response = await axios.get(`http://localhost:3000/api/checklists?utilisateurId=${utilisateurId}`);
-      console.log("Données reçues par fetchUserChecklists :", response.data);
-      return response.data;
+    const response = await api.get(`/api/checklists?utilisateurId=${utilisateurId}`);
+    console.log("Données reçues par fetchUserChecklists :", response.data);
+    return response.data;
   } catch (error) {
-      console.error("Erreur dans fetchUserChecklists :", error);
-      throw error;
+    console.error("Erreur dans fetchUserChecklists :", error);
+    throw error;
   }
 };
-

@@ -62,14 +62,17 @@ const ImpactsTable = ({ groupedImpacts, onFillChecklist }) => {
                         <div className="impact-descriptions">
                             {impacts.map((impact) => (
                                 <div key={impact.id_impact} className="impact-item">
-                                    <input
-                                        type="checkbox"
-                                        checked={selectedImpacts.includes(impact.id_impact)}
-                                        onChange={() => handleCheckboxChange(impact.id_impact)}
-                                    />
-                                    <span className="impact-icon">✔️</span>
-                                    <p>{impact.impact}</p>
-                                    <small>
+                                    <label className="impact-checkbox-label">
+                                        <input
+                                            type="checkbox"
+                                            className="impact-checkbox"
+                                            checked={selectedImpacts.includes(impact.id_impact)}
+                                            onChange={() => handleCheckboxChange(impact.id_impact)}
+                                        />
+                                        <span className="impact-checkbox-custom"></span>
+                                        <span className="impact-description">{impact.impact}</span>
+                                    </label>
+                                    <small className="impact-importance">
                                         <strong>Importance :</strong> {impact.importance}
                                     </small>
                                 </div>

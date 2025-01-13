@@ -38,23 +38,42 @@ function Footer() {
 
                     {/* Colonne 3 */}
                     <div className="col-md-4 text-center text-md-end">
-    <h5 className="footer-title">Suivez-nous</h5>
-    <div className="social-icons">
-        <a href="https://facebook.com" className="footer-icon" title="Facebook">
-            <i className="fab fa-facebook-f"></i>
-        </a>
-        <a href="https://instagram.com" className="footer-icon" title="Instagram">
-            <i className="fab fa-instagram"></i>
-        </a>
-        <a href="https://twitter.com" className="footer-icon" title="Twitter">
-            <i className="fab fa-twitter"></i>
-        </a>
-        <a href="https://linkedin.com" className="footer-icon" title="LinkedIn">
-            <i className="fab fa-linkedin-in"></i>
-        </a>
-    </div>
-</div>
-
+                        <h5 className="footer-title">Suivez-nous</h5>
+                        <div className="social-icons">
+                            <a 
+                                href="https://facebook.com" 
+                                className="footer-icon" 
+                                title="Facebook" 
+                                aria-label="Facebook"
+                            >
+                                <i className="fab fa-facebook-f"></i>
+                            </a>
+                            <a 
+                                href="https://instagram.com" 
+                                className="footer-icon" 
+                                title="Instagram" 
+                                aria-label="Instagram"
+                            >
+                                <i className="fab fa-instagram"></i>
+                            </a>
+                            <a 
+                                href="https://twitter.com" 
+                                className="footer-icon" 
+                                title="Twitter" 
+                                aria-label="Twitter"
+                            >
+                                <i className="fab fa-twitter"></i>
+                            </a>
+                            <a 
+                                href="https://linkedin.com" 
+                                className="footer-icon" 
+                                title="LinkedIn" 
+                                aria-label="LinkedIn"
+                            >
+                                <i className="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Ligne de copyright */}

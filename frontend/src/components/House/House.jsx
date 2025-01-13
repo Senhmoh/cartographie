@@ -18,7 +18,6 @@ const House = ({ onComposanteSelect }) => {
         { id: 13, nom: 'Electricité', positionClass: 'electricite' },
         { id: 14, nom: 'HVAC', positionClass: 'hvac' },
     ];
-    
 
     // État pour gérer la composante sélectionnée
     const [selectedComposanteId, setSelectedComposanteId] = useState(null);
@@ -34,7 +33,11 @@ const House = ({ onComposanteSelect }) => {
 
     return (
         <div className="house-container">
-            <img src="/images/maison_bruxelloise.png" alt="Maison" className="house-image" />
+            <img 
+                src="/images/maison_bruxelloise.png" 
+                alt="Maison" 
+                className="house-image" 
+            />
             {/* Annotations interactives */}
             {composantes.map((composante) => (
                 <div
@@ -43,7 +46,6 @@ const House = ({ onComposanteSelect }) => {
                         selectedComposanteId === composante.id ? 'active' : ''
                     }`}
                     onClick={() => handleComposanteClick(composante.id)}
-                    style={{ cursor: "pointer" }}
                 >
                     {composante.nom}
                 </div>

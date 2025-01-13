@@ -1,3 +1,15 @@
+/* Variables CSS pour centraliser les couleurs */
+:root {
+  --primary-color: #38bfcc;
+  --secondary-color: #6f7170;
+  --background-color: #ebe6e1;
+  --light-background: #f7f5f2;
+  --dark-gray: #4f4f4f;
+  --light-gray: #bdbdbd;
+  --text-muted: #6f7170;
+}
+
+/* Styles généraux */
 html, body {
   height: 100%;
 }
@@ -13,8 +25,10 @@ body {
 }
 
 .app-container {
-  background-color: #f7f5f2;
+  background-color: var(--light-background);
 }
+
+/* Footer */
 .footer {
   position: relative;
   background: linear-gradient(135deg, #343a40, #6c757d);
@@ -42,192 +56,46 @@ body {
 }
 
 .footer-link {
-  color: #b7e4f9;
+  color: var(--primary-color);
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .footer-link:hover {
-  color: #9fd3f6;
+  color: lighten(var(--primary-color), 10%);
   text-decoration: underline;
 }
 
-/* Centrage horizontal et vertical des icônes sous le titre */
-.social-icons {
-  display: flex; /* Alignement en ligne des icônes */
-  justify-content: center; /* Centrage horizontal */
-  align-items: center; /* Centrage vertical */
-  gap: 1.5rem; /* Espacement entre les icônes */
-  margin-top: 1rem; /* Espacement entre le titre et les icônes */
-}
-
+/* Icônes de réseaux sociaux */
 .footer-icon {
-  font-size: 1.5rem; /* Taille des icônes */
-  color: #b7e4f9; /* Couleur des icônes */
-  transition: color 0.3s ease, transform 0.3s ease; /* Animation de survol */
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .footer-icon:hover {
-  color: #9fd3f6; /* Couleur au survol */
-  transform: translateY(-3px); /* Animation au survol */
+  color: lighten(var(--primary-color), 10%);
+  transform: translateY(-3px);
 }
 
-
-@media (max-width: 768px) {
-  .footer-title {
-      font-size: 1rem;
-  }
-
-  .footer p,
-  .footer ul {
-      font-size: 0.8rem;
-  }
-
-  .footer-icon {
-      font-size: 1.2rem;
-  }
-  .social-icons {
-    justify-content: center; /* Centrer les icônes sur les petits écrans */
-  }
+/* Alignement des icônes */
+.social-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
 }
 
-/* Centrer les menus sur mobile */
-.container {
-  flex : 1;
-  max-width: 100%;
-  padding: 0 1rem;
-}
-
-.house-container {
-  position: relative;
-  width: 120%; /* Image responsive */
-  max-width: 600px; /* Limite la largeur maximale */
-  margin: 0 auto;
-}
-
-.house-image {
-  width: 100%;
-  display: block;
-}
-
-.annotation {
-  position: absolute;
-  background: rgba(255, 255, 255, 0.8);
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 0.8rem;
-  text-align: center;
-  transform: translate(-50%, -50%);
-  pointer-events: auto; /* Éviter les interactions avec les annotations */
-}
-
-.annotation.active {
-  background: #bdbdbd; /* Couleur différente */
-  color: #4d752f;
-  font-weight: bold;
-  border: 2px solid #4f4f4f; /* Contour pour mieux identifier l'état actif */
-}
-
-
-
-/* Position spécifique des annotations */
-.charpente-toiture {
-  top: 10%;
-  left: 50%;
-}
-
-.facades-murs {
-  top: 50%;
-  left: 15%;
-}
-
-.murs-mitoyens {
-  top: 30%;
-  left: 10%;
-}
-
-.murs-porteurs {
-  top: 50%;
-  left: 70%;
-}
-
-.dalles-planchers {
-  top: 75%;
-  left: 45%;
-}
-
-.escaliers {
-  top: 60%;
-  left: 55%;
-}
-
-.menuiseries-exterieures {
-  top: 65%;
-  left: 20%;
-}
-
-.menuiseries-interieures {
-  top: 20%;
-  left: 55%;
-}
-
-.cloisons {
-  top: 65%;
-  left: 70%;
-}
-
-.revetements-sol {
-  top: 83%;
-  left: 50%;
-}
-
-.revetements-muraux {
-  top: 40%;
-  left: 40%;
-}
-
-.plomberie {
-  top: 100%;
-  left: 40%;
-}
-
-.electricite {
-  top: 100%;
-  left: 10%;
-}
-
-.hvac {
-  top: 100%;
-  left: 70%;
-}
-
-
-/* Conteneur principal */
+/* Conteneur des impacts */
 .impact-card-container {
   margin-top: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: left;
 }
 
-.impact-card-title {
-  font-size: 1.5rem;
-  color: #4f4f4f;
-  margin-bottom: 15px;
-  font-weight: bold;
-  text-align: left;
-}
-
-.impact-card-line {
-  height: 2px;
-  background-color: #4f4f4f; /* Couleur verte */
-  margin: 5px 0 15px 0; /* Marges : haut, bas */
-  width: 100%; /* Prend toute la largeur du conteneur */
-}
-
-
-/* Carte principale */
+/* Carte d'impact */
 .impact-card {
   background: #ffffff;
   border-radius: 12px;
@@ -243,97 +111,43 @@ body {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-/* En-tête de la carte */
-.impact-header {
-  margin-bottom: 15px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #ebe6e1;
-}
-
-.impact-meta {
-  display: block;
-  font-size: 0.9rem;
-  color: #6f7170;
-  margin: 5px 0;
-}
-
-/* Liste des descriptions */
-.impact-descriptions {
+/* Checkbox personnalisée */
+.impact-checkbox-label {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 10px;
+  cursor: pointer;
 }
 
-.impact-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 8px 12px;
-  background-color: #f7f5f2;
-  border-radius: 8px;
-  transition: background-color 0.3s ease;
+.impact-checkbox {
+  display: none;
 }
 
-.impact-item:hover {
-  background-color: #ebe6e1;
+.impact-checkbox-custom {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--primary-color);
+  border-radius: 3px;
+  background-color: white;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-.impact-icon {
-  font-size: 1.2rem;
-  color: #38bfcc;
+.impact-checkbox:checked + .impact-checkbox-custom {
+  background-color: var(--primary-color);
+  border-color: var(--secondary-color);
 }
 
-.impact-item p {
-  margin: 0;
-  color: #6f7170;
+.impact-description {
+  color: var(--text-muted);
   font-size: 0.95rem;
 }
 
-.impact-item input {
-  margin-right: 0.5rem;
+.impact-importance {
+  font-size: 0.8rem;
+  color: var(--text-muted);
 }
 
-/* Hérite de .impact-card mais ajusté pour la page Profil */
-.profile-impact-card {
-  position: relative;
-  background: #fff;
-  border: 2px solid #e0e0e0;
-  padding: 15px;
-  margin-bottom: 20px;
-  transition: all 0.3s ease-in-out;
-}
-
-.profile-impact-card:hover {
-  border-color: #38bfcc;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-}
-
-/* Impact item spécifique pour le profil */
-.profile-impact-item {
-  padding: 10px;
-  background-color: #f7f5f2;
-  border-radius: 5px;
-}
-
-.profile-impact-item:hover {
-  background-color: #ebe6e1;
-}
-
-/* Grille pour organiser les cartes dans Profil */
-.profile-checklists-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 15px;
-  margin-top: 20px;
-}
-
-
-.fill-checklist-button-container {
-  text-align: right;
-  margin-bottom: 1rem;
-}
-
-/* Dégradé pour le bouton */
+/* Boutons */
 .btn-submit {
   width: 100%;
   padding: 10px;
@@ -342,7 +156,7 @@ body {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  background: linear-gradient(to right, #38bfcc, #6f7170);
+  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
   transition: opacity 0.3s ease, transform 0.2s ease;
 }
 
@@ -352,285 +166,262 @@ body {
 }
 
 .btn-submit:hover:not(.btn-disabled) {
-  background: linear-gradient(to right, #38bfcc, #6f7170);
+  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
 }
 
-
-
-
-
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .annotation {
-      font-size: 0.8rem;
-      padding: 3px 8px;
-  }
+/* Autres styles */
+.profile-impact-card {
+  background: #fff;
+  border: 2px solid #e0e0e0;
+  padding: 15px;
+  margin-bottom: 20px;
+  transition: all 0.3s ease-in-out;
 }
 
-
-.d-flex > .dropdown-button {
-  flex: 1;
+.profile-impact-card:hover {
+  border-color: var(--primary-color);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
-@media (min-width: 768px) {
-  .container {
-      max-width: 80%;
-  }
-
-  .d-flex {
-      gap: 1rem;
-  }
-}
-
-/* Conteneur principal pour centrer le formulaire */
-.login-container {
+/* Bannière */
+.home-banner {
+  background-color: var(--background-color);
+  padding: 3rem 1rem;
   display: flex;
-  justify-content: center; /* Centre horizontalement */
-  align-items: center; /* Centre verticalement */
-  height: 80vh; /* Prend toute la hauteur de la fenêtre */
-  padding: 20px; /* Ajoute un peu d'espace autour pour les petits écrans */
-  background-color: #f7f5f2; /* Couleur de fond */
-}
-
-/* Carte du formulaire */
-.login-card {
-  background: #ffffff;
-  border-radius: 10px;
-  padding: 40px 30px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Ombre légère */
-  width: 100%; /* Pour qu'il soit responsive */
-  max-width: 400px; /* Définit une largeur maximale */
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  color: #6f7170;
 }
 
-
-/* Title and subtitle */
-.login-title {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #38bfcc;
+/* Dégradé texte */
+.gradient-text {
+  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.login-subtitle {
+.navbar-custom {
+  background-color: var(--background-color);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Sticky navbar */
+.sticky-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1030; /* Assure que la navbar reste au-dessus des autres éléments */
+}
+
+.logo-container {
+  max-height: 80px;
+}
+
+.logo-image {
+  max-height: 80px;
+  width: auto;
+}
+
+/* Toggle personnalisé */
+.custom-navbar-toggler {
+  border: none;
+  background: transparent;
+  font-size: 1.5rem;
+  color: var(--secondary-color);
+  transition: color 0.3s ease;
+}
+
+.custom-navbar-toggler:hover {
+  color: var(--primary-color);
+}
+
+.nav-link-custom {
+  color: var(--secondary-color);
   font-size: 1rem;
-  margin-bottom: 30px;
+  padding: 10px;
+  transition: color 0.3s ease;
 }
 
-/* Input group */
-.input-group {
+.nav-link-custom:hover {
+  color: var(--primary-color);
+}
+
+/* Conteneur principal des thématiques */
+.thematiques-container {
+  margin-bottom: 1rem;
+}
+
+/* Menu déroulant des thématiques */
+.dropdown-thematiques {
+  text-align: left;
+}
+
+/* Badges sélectionnés */
+.thematique-badge {
+  background-color: var(--primary-color);
+  color: white;
+  font-size: 0.9rem;
+  border-radius: 12px;
+  padding: 5px 10px;
+  transition: background-color 0.3s ease;
+}
+
+.thematique-badge:hover {
+  background-color: darken(var(--primary-color), 10%);
+}
+
+/* Conteneur principal */
+.house-container {
   position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Image de la maison */
+.house-image {
+  width: 100%;
+  display: block;
+  border-radius: 10px;
+}
+
+/* Styles communs pour les annotations */
+.annotation {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--text-muted);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.annotation:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+/* État actif des annotations */
+.annotation.active {
+  background: var(--secondary-color);
+  color: white;
+  font-weight: bold;
+  border: 2px solid var(--dark-gray);
+}
+
+/* Positions spécifiques des annotations */
+.charpente-toiture { top: 10%; left: 50%; }
+.facades-murs { top: 50%; left: 15%; }
+.murs-mitoyens { top: 30%; left: 10%; }
+.murs-porteurs { top: 50%; left: 70%; }
+.dalles-planchers { top: 75%; left: 45%; }
+.escaliers { top: 60%; left: 55%; }
+.menuiseries-exterieures { top: 65%; left: 20%; }
+.menuiseries-interieures { top: 20%; left: 55%; }
+.cloisons { top: 65%; left: 70%; }
+.revetements-sol { top: 83%; left: 50%; }
+.revetements-muraux { top: 40%; left: 40 }
+
+/* Conteneur principal des pages d'authentification */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: var(--light-background);
+}
+
+/* Carte d'authentification */
+.auth-card {
+  background: white;
+  border-radius: 12px;
+  padding: 30px 40px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+/* Titres et sous-titres */
+.auth-title {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.auth-subtitle {
+  font-size: 1rem;
+  color: var(--text-muted);
   margin-bottom: 20px;
 }
 
-.input-group input {
+/* Formulaire */
+.auth-form .input-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.auth-form .input-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.auth-form .input-group input {
   width: 100%;
-  padding: 10px 10px 10px 0;
+  padding: 10px;
+  border: 1px solid var(--primary-color);
+  border-radius: 5px;
   font-size: 1rem;
-  color: #6f7170;
-  border: none;
-  border-bottom: 2px solid #38bfcc;
-  outline: none;
-  background: transparent;
   transition: border-color 0.3s ease;
 }
 
-.input-group input:focus {
-  border-color: #6f7170;
+.auth-form .input-group input:focus {
+  border-color: var(--secondary-color);
+  outline: none;
 }
 
-.input-group label {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-  color: #a1a1a1;
-  font-size: 1rem;
-  pointer-events: none;
-  transition: all 0.3s ease;
-}
-
-.input-group input:focus + label,
-.input-group input:not(:placeholder-shown) + label {
-  top: -10px;
-  font-size: 0.8rem;
-  color: #38bfcc;
-}
-
-.forgot-password {
-  color: #6f7170;
-  text-decoration: none;
-  font-size: 0.9rem;
-}
-
-.forgot-password:hover {
-  text-decoration: underline;
-}
-
-.signup-text {
-  margin-top: 10px;
-  font-size: 0.9rem;
-}
-
-.signup-text a {
-  color: #38bfcc;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.signup-text a:hover {
-  text-decoration: underline;
-}
-
-/* Dégradé pour le texte du titre */
-.gradient-text {
-  background: linear-gradient(to right, #38bfcc, #6f7170);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent; /* Rend le texte transparent pour afficher le dégradé */
-}
-
-/* Conteneur des boutons pour ajouter de l'espacement */
-.button-group {
-  gap: 10px; /* Espacement horizontal entre les boutons */
-}
-
-/* Styles communs pour tous les boutons */
-.custom-btn {
-  border: 1.5px solid;
-  font-size: 1rem;
-  padding: 8px 15px; /* Ajuste la taille des boutons */
-  border-radius: 5px; /* Coins arrondis */
-  transition: all 0.3s ease; /* Transition fluide */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px; /* Espacement entre l'icône et le texte */
-}
-
-/* Bouton vert */
-.custom-btn-green {
-  color: #38bfcc;
-  border-color: #38bfcc;
-}
-
-.custom-btn-green:hover {
-  background-color: #38bfcc;
+/* Boutons */
+.auth-btn {
+  width: 100%;
+  padding: 10px;
+  font-size: 1.1rem;
   color: white;
-}
-
-/* Bouton gris */
-.custom-btn-gray-filled {
-  color: #38bfcc;
-  border-color: #38bfcc;
-}
-
-.custom-btn-gray-filled:hover {
-  background-color: #38bfcc;
-  color: white;
-}
-
-.view-details-button {
-  background-color: #38bfcc;
-  color: #fff;
+  background: var(--primary-color);
   border: none;
   border-radius: 5px;
-  padding: 8px 12px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background 0.3s ease;
+}
+
+.auth-btn:hover {
+  background: var(--secondary-color);
+}
+
+/* Pieds de formulaire */
+.auth-footer {
+  margin-top: 20px;
   font-size: 0.9rem;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  flex-direction: column;
 }
 
-.view-details-button:hover {
-  background-color: #38bfcc;
+.auth-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
 
-.home-banner {
-  background-color: #ebe6e1; /* Couleur de fond similaire à l'exemple #ebe6e1*/
-  width: 100%; /* Prend toute la largeur */
-  margin: 0;
-  padding: 3rem 1rem; /* Espacement */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+.auth-link:hover {
+  color: var(--secondary-color);
 }
 
-.banner-title {
-  font-size: 2.5rem;
-  font-weight: bold;
-  line-height: 1.3;
-  margin-bottom: 0.5rem;
-}
-
-.banner-box {
-  border: 2px solid #38bfcc; /* Couleur du contour */
-  background-color: #f7f5f2;
-  border-radius: 8px; /* Coins arrondis */
-  padding: 0.5rem; /* Espacement interne */
-  margin-top: 1rem; /* Espace entre le titre et le cadre */
-  margin-left: 25%; /* Réglez ici la marge gauche en pourcentage */
-  margin-right: 25%; /* Réglez ici la marge droite en pourcentage */
-  text-align: center; /* Centre le texte dans le cadre */
-  width: auto; /* Adapte la largeur au parent et aux marges */
-  display: block; /* Bloque le comportement inline */
-  max-width: calc(100% - 25%); /* Assure que le cadre ne dépasse pas l'espace défini par les marges */
-}
-
-/* Texte dans le cadre */
-.banner-text {
-  font-style: italic; /* Texte en italique */
-  font-size: 1.2rem; /* Taille de texte ajustée */
-  color: #333; /* Noir atténué */
-  margin: 0; /* Supprime les marges */
-  text-align: center;
-  word-wrap: break-word; /* Permet au texte de passer à la ligne si nécessaire */
-}
-
-/* Responsive: ajustez les marges sur les petits écrans */
-@media (max-width: 768px) {
-  .banner-box {
-    margin-left: 5%; /* Réduit les marges latérales sur petits écrans */
-    margin-right: 5%;
-  }
-}
-
-@media (max-width: 480px) {
-  .banner-box {
-    margin-left: 2%; /* Encore moins de marge pour les très petits écrans */
-    margin-right: 2%;
-  }
+/* Message de succès */
+.auth-success .auth-message {
+  margin: 20px 0;
+  font-size: 1rem;
+  color: var(--text-muted);
 }
 
 
-
-
-
-
-
-
-/* Responsiveness */
-@media (max-width: 768px) {
-  .login-card {
-    padding: 20px;
-  }
-  .login-title {
-    font-size: 1.5rem;
-  }
-  .login-subtitle {
-    font-size: 0.9rem;
-  }
-}
-
-/* Ajustements responsive pour petits écrans */
-@media (max-width: 480px) {
-  .login-card {
-    padding: 20px;
-    max-width: 90%; /* Prend presque toute la largeur pour les petits écrans */
-  }
-}

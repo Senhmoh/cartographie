@@ -1,71 +1,62 @@
-import React from 'react';
-import { Container, Navbar } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../providers/AuthProvider';
 
 const Header = () => {
     const { utilisateur, logout } = useAuth();
-    console.log(utilisateur);
+    const [expanded, setExpanded] = useState(false);
 
     return (
-        <Navbar expand="lg" style={{ backgroundColor: "#ebe6e1" }} className="py-2">
-            <Container className="d-flex align-items-center">
-                {/* Logo avec lien vers l'accueil ebe6e1*/}
-                <Navbar.Brand as={Link} to="/" className="me-auto">
+        <Navbar expand="lg" className="navbar-custom sticky-navbar py-2" expanded={expanded}>
+            <Container>
+                {/* Logo avec lien vers l'accueil */}
+                <Navbar.Brand as={Link} to="/" className="logo-container">
                     <img
                         src="/images/logo.svg"
                         alt="Renov'IMPACT Logo"
-                        className="img-fluid"
-                        style={{
-                            maxHeight: '80px',
-                            width: 'auto',
-                        }}
+                        className="logo-image"
                     />
                 </Navbar.Brand>
-                
-                {/* Boutons */}
-                <div className="d-flex button-group">
-                    {utilisateur ? (
-                        <>
-                            <span className="me-3">
-                                Bienvenue, {utilisateur.nom_utilisateur || 'Utilisateur'}!
-                            </span>
-                            <button
-                                onClick={logout}
-                                className="btn custom-btn custom-btn-green"
-                                title="Déconnexion"
-                            >
-                                <i className="bi bi-box-arrow-right"></i>
-                            </button>
-                            <Link 
-                            to="/profil" 
-                            className="btn custom-btn custom-btn-green" 
-                            title="Profil"
-                        >
-                            <i class="bi bi-list-check"></i>
-                        </Link>
-                        </>
-                    ) : (
-                        <Link 
-                            to="/login" 
-                            className="btn custom-btn custom-btn-green" 
-                            title="Connexion"
-                        >
-                            <i className="bi bi-person"></i>
-                        </Link>
-                    )}
-                    <button 
-                        className="btn custom-btn custom-btn-gray-filled"
-                        title="Changer la langue"
-                    >
-                        FR
-                    </button>
-                </div>
+
+                {/* Bouton toggle */}
+                <Navbar.Toggle
+                    aria-controls="basic-navbar-nav"
+                    className="custom-navbar-toggler"
+                    onClick={() => setExpanded(!expanded)}
+                >
+                    <i className="bi bi-list"></i>
+                </Navbar.Toggle>
+
+                {/* Contenu du menu */}
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="ms-auto">
+                        {utilisateur ? (
+                            <>
+                                <Nav.Link as={Link} to="/profil" className="nav-link-custom">
+                                    <i className="bi bi-person-circle me-2"></i>
+                                    {utilisateur.nom_utilisateur || 'Profil'}
+                                </Nav.Link>
+                                <Nav.Link
+                                    onClick={logout}
+                                    className="nav-link-custom"
+                                >
+                                    <i className="bi bi-box-arrow-right me-2"></i>Déconnexion
+                                </Nav.Link>
+                            </>
+                        ) : (
+                            <Nav.Link as={Link} to="/login" className="nav-link-custom">
+                                <i className="bi bi-person me-2"></i>Connexion
+                            </Nav.Link>
+                        )}
+                        <Nav.Link className="nav-link-custom" title="Changer la langue">
+                            <i className="bi bi-translate me-2"></i>FR
+                        </Nav.Link>
+                    </Nav>
+                </Navbar.Collapse>
             </Container>
         </Navbar>
     );
-    
 };
 
 export default Header;
-
