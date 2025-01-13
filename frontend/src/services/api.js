@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Remplace l'URL statique par l'URL de la variable d'environnement
 const api = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_URL + 'api',// Charge l'URL depuis les variables d'environnement
+  baseURL: `${import.meta.env.VITE_BACKEND_URL}/api`, // Charge l'URL depuis les variables d'environnement
 });
 
 export const fetchMetiers = async () => {
