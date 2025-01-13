@@ -249,6 +249,9 @@ body {
 .navbar-custom {
   background-color: var(--background-color);
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 /* Sticky navbar */
