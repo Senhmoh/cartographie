@@ -39,12 +39,32 @@ export const AuthProvider = ({ children }) => {
         if (token) {
             const decoded = decodeToken(token);
             if (decoded) {
-                console.log("Utilisateur défini dans le contexte :", decoded);
-                setUtilisateur(decoded);
+                fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/validate-token`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Token invalide ou expiré');
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log("Utilisateur valide :", data);
+                    setUtilisateur(decoded);
+                })
+                .catch((error) => {
+                    console.error("Erreur de validation du token :", error);
+                    localStorage.removeItem('token');
+                    setUtilisateur(null);
+                });
             }
         }
-        
     }, []);
+    
     
 
     // Fonction pour connecter l'utilisateur

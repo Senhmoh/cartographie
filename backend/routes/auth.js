@@ -76,6 +76,22 @@ router.post('/connexion', [
         console.error('Erreur lors de la connexion :', error);
         res.status(500).json({ message: 'Erreur interne du serveur.' });
     }
+
 });
+
+router.post('/api/auth/validate-token', (req, res) => {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
+        return res.status(401).json({ message: 'Token manquant' });
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        res.status(200).json({ message: 'Token valide', utilisateur: decoded });
+    } catch (error) {
+        res.status(401).json({ message: 'Token invalide ou expiré' });
+    }
+});
+
 
 export default router;
