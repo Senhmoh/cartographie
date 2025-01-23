@@ -13,6 +13,7 @@ import './config/passport.js';
 import { cleanExpiredTokens } from './routes/auth.js';
 import { createClient } from 'redis';
 import { fileURLToPath } from 'url';
+import { createRequire } from 'module'; // Importe createRequire pour utiliser require
 
 // Configurer __dirname pour ES Modules
 const __filename = fileURLToPath(import.meta.url);
@@ -20,6 +21,10 @@ const __dirname = path.dirname(__filename);
 
 // Initialiser dotenv
 dotenv.config();
+
+// Utilise createRequire pour importer connect-redis
+const require = createRequire(import.meta.url);
+const connectRedis = require('connect-redis');
 
 // Créez le client Redis
 const redisClient = createClient({
@@ -29,9 +34,6 @@ const redisClient = createClient({
 
 // Connectez Redis
 redisClient.connect().catch(console.error);
-
-// Import dynamique de connect-redis pour éviter les conflits ES/CommomJS
-const { default: connectRedis } = await import('connect-redis');
 
 // Configurez RedisStore
 const RedisStore = connectRedis(session);
@@ -54,7 +56,7 @@ app.use(
         cookie: {
             secure: process.env.NODE_ENV === 'production',
             httpOnly: true,
-            sameSite: 'lax',
+            sameSite: 'none',
         },
     })
 );
