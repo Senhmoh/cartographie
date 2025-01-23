@@ -91,6 +91,14 @@ app.options('*', cors()); // Gère toutes les requêtes OPTIONS
 app.use('/api', apiRoutes);
 app.use('/api/auth', authRoutes);
 
+const __dirname = path.resolve();
+app.use(express.static(path.join(__dirname, 'build')));
+
+// Redirige les routes inconnues vers React (index.html)
+app.get('/*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+});
+
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
