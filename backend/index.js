@@ -56,7 +56,7 @@ app.use(passport.session()); // Nécessaire si vous utilisez des sessions avec P
 
 // Configuration CORS
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://cartographie-flax.vercel.app/', 'https://renov-impact.be/'],
+  origin: ['http://localhost:5173', 'https://cartographie-flax.vercel.app', 'https://renov-impact.be'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
