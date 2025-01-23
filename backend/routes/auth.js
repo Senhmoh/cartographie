@@ -134,6 +134,7 @@ router.post('/connexion', [
             sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // none pour production, lax pour dev
             maxAge: 15 * 60 * 1000, // 15 minutes
         });
+        console.log('Cookies définis :', res.getHeaders()['set-cookie']);
 
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
@@ -176,6 +177,7 @@ router.post('/refresh-token', async (req, res) => {
             sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // none pour production, lax pour dev
             maxAge: 15 * 60 * 1000, // 15 minutes
         });
+        console.log('Cookies définis :', res.getHeaders()['set-cookie']);
 
         res.status(200).json({ message: 'Token rafraîchi avec succès.' });
     } catch (error) {

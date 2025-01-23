@@ -54,6 +54,12 @@ app.use(
     })
 );
 
+app.use((req, res, next) => {
+  console.log('Cookies reçus :', req.cookies);
+  console.log('Headers reçus :', req.headers);
+  next();
+});
+
 // Routes API
 app.use('/api', apiRoutes);
 app.use('/api/auth', authRoutes);
