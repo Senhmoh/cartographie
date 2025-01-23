@@ -20,20 +20,15 @@ function Footer() {
                         <h5 className="footer-title">Liens rapides</h5>
                         <ul className="list-unstyled">
                             <li>
-                                <a href="/about" className="footer-link">
-                                    À propos
-                                </a>
-                            </li>
-                            <li>
-                    <p>
                 <Link to="/privacy" className="auth-link">Politique de confidentialité</Link>
-                    </p>
                             </li>
                             <li>
-                                <a href="/terms" className="footer-link">
-                                    Mentions légales
-                                </a>
-                            </li>
+    <Link to="/about" className="footer-link">À propos</Link>
+</li>
+<li>
+    <Link to="/terms" className="footer-link">Mentions légales</Link>
+</li>
+
                         </ul>
                     </div>
 
