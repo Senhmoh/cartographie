@@ -281,18 +281,20 @@ router.post('/forgot-password', async (req, res) => {
     }
 });
 
-// Route pour tester et activer les cookies
 router.get('/test-cookies', (req, res) => {
+    console.log('Requête reçue dans /test-cookies');
+    console.log('Headers reçus :', req.headers);
+
     res.cookie('testCookie', 'testValue', {
-        httpOnly: true, // Empêche l'accès JavaScript
-        secure: true, // Requiert HTTPS
-        sameSite: 'none', // Nécessaire pour les requêtes cross-origin
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none',
         maxAge: 60 * 1000, // 1 minute
     });
 
     res.status(200).json({ message: 'Cookie défini avec succès.' });
-    console.log('Cookies définis avec succès:', res.getHeaders()['set-cookie']);
 });
+
 
 
 export default router;
