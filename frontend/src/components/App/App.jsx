@@ -35,6 +35,23 @@ function ProtectedRoute({ children, requiredRole }) {
     return children; // Rendu du contenu protégé
 }
 
+// Composant pour protéger les routes publiques (login, inscription)
+function PublicRoute({ children }) {
+    const { isAuthenticated, loading } = useAuth();
+    const location = useLocation();
+
+    if (loading) {
+        return <div>Chargement...</div>; // Indicateur de chargement
+    }
+
+    if (isAuthenticated) {
+        // Redirige les utilisateurs connectés vers la page d'accueil ou une autre page
+        return <Navigate to="/" state={{ from: location }} replace />;
+    }
+
+    return children; // Rendu du contenu public
+}
+
 function App() {
     return (
         <Router>
@@ -46,8 +63,22 @@ function App() {
                         <Routes>
                             {/* Routes définies ici */}
                             <Route path="/" element={<Home />} />
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/inscription" element={<Inscription />} />
+                            <Route
+                                path="/login"
+                                element={
+                                    <PublicRoute>
+                                        <Login />
+                                    </PublicRoute>
+                                }
+                            />
+                            <Route
+                                path="/inscription"
+                                element={
+                                    <PublicRoute>
+                                        <Inscription />
+                                    </PublicRoute>
+                                }
+                            />
                             <Route path="/forgot-password" element={<ForgotPassword />} />
                             <Route path="/privacy" element={<GDPRPage />} />
                             <Route
@@ -92,6 +123,5 @@ function App() {
         </Router>
     );
 }
-
 
 export default App;
