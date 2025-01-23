@@ -8,6 +8,7 @@ function LoginForm() {
     const [error, setError] = useState('');
     const { login } = useAuth(); // Gestion de la connexion utilisateur
     const navigate = useNavigate();
+    const [cookiesActivated, setCookiesActivated] = useState(false); // État pour activer les cookies
 
     // Gérer les changements dans les champs du formulaire
     const handleChange = (e) => {
@@ -27,17 +28,35 @@ function LoginForm() {
         return true;
     };
 
-    // Gestion de la soumission du formulaire
+     // Fonction pour activer les cookies via une interaction utilisateur
+     const activateCookies = async () => {
+        try {
+            await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/test-cookies`, {
+                credentials: 'include',
+            });
+            setCookiesActivated(true); // Marquer les cookies comme activés
+        } catch (err) {
+            console.error('Erreur lors de l\'activation des cookies :', err);
+            setError('Impossible d\'activer les cookies. Veuillez réessayer.');
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!validateForm()) return;
     
         try {
+            // Activer les cookies avant de soumettre
+            await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/test-cookies`, {
+                credentials: 'include',
+            });
+    
+            // Effectuer la connexion après activation des cookies
             await connexionUtilisateur({
                 email: formData.email,
                 mot_de_passe: formData.mot_de_passe,
             });
-            
+    
             // Utilisation du contexte pour synchroniser l'état utilisateur
             await login();
     
@@ -45,9 +64,10 @@ function LoginForm() {
             setError('');
             navigate('/');
         } catch (err) {
-            setError(err.message || 'Identifiants incorrects.');
+            setError(err.message || 'Identifiants incorrects ou échec de l\'activation des cookies.');
         }
     };
+    
 
     return (
         <div className="auth-container">

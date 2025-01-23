@@ -281,4 +281,17 @@ router.post('/forgot-password', async (req, res) => {
     }
 });
 
+// Route pour tester et activer les cookies
+router.get('/test-cookies', (req, res) => {
+    res.cookie('testCookie', 'testValue', {
+        httpOnly: true, // Empêche l'accès JavaScript
+        secure: true, // Requiert HTTPS
+        sameSite: 'none', // Nécessaire pour les requêtes cross-origin
+        maxAge: 60 * 1000, // 1 minute
+    });
+
+    res.status(200).json({ message: 'Cookie défini avec succès.' });
+});
+
+
 export default router;
