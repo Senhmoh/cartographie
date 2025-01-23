@@ -4,10 +4,10 @@ const House = ({ onComposanteSelect }) => {
     // Liste des composantes avec IDs et noms
     const composantes = [
         { id: 1, nom: 'Façades', positionClass: 'facades-murs' },
-        { id: 2, nom: 'Charpente - Toiture', positionClass: 'charpente-toiture' },
-        { id: 3, nom: 'Murs mitoyens', positionClass: 'murs-mitoyens' },
-        { id: 4, nom: 'Murs porteurs intérieurs', positionClass: 'murs-porteurs' },
-        { id: 5, nom: 'Planchers', positionClass: 'dalles-planchers' },
+        { id: 2, nom: 'Murs mitoyens', positionClass: 'murs-mitoyens' },
+        { id: 3, nom: 'Murs porteurs intérieurs', positionClass: 'murs-porteurs' },
+        { id: 4, nom: 'Planchers', positionClass: 'dalles-planchers' },
+        { id: 5, nom: 'Charpente - Toiture', positionClass: 'charpente-toiture' },
         { id: 6, nom: 'Escaliers', positionClass: 'escaliers' },
         { id: 7, nom: 'Menuiseries extérieures', positionClass: 'menuiseries-exterieures' },
         { id: 8, nom: 'Menuiseries intérieures', positionClass: 'menuiseries-interieures' },

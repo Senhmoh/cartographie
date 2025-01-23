@@ -10,11 +10,13 @@ import Metier from './Metier.js';
 Utilisateur.hasMany(Checklist, { foreignKey: 'utilisateur', onDelete: 'CASCADE' });
 Checklist.belongsTo(Utilisateur, { foreignKey: 'utilisateur', onDelete: 'CASCADE' });
 
+// Checklist <-> ChecklistImpacts
 Checklist.hasMany(ChecklistImpacts, { foreignKey: 'checklist', onDelete: 'CASCADE' });
 ChecklistImpacts.belongsTo(Checklist, { foreignKey: 'checklist', onDelete: 'CASCADE' });
 
-Impact.hasMany(ChecklistImpacts, { foreignKey: 'impact', onDelete: 'CASCADE' });
+// ChecklistImpacts <-> Impact
 ChecklistImpacts.belongsTo(Impact, { foreignKey: 'impact', onDelete: 'CASCADE' });
+Impact.hasMany(ChecklistImpacts, { foreignKey: 'impact', onDelete: 'CASCADE' });
 
 Impact.belongsTo(Composante, { foreignKey: 'composante', onDelete: 'CASCADE' });
 Impact.belongsTo(Thematique, { foreignKey: 'thematique', onDelete: 'CASCADE' });

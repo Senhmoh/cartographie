@@ -43,14 +43,39 @@ POST http://localhost:3000/api/checklists
 Content-Type: application/json
 
 {
-  "utilisateur": 2,
-  "nom_checklist": "hey",
-  "impacts": [1]
+  "utilisateur": 1,
+  "nom_checklist": "hoi",
+  "impacts": [1, 71, 78]
 }
 
 ### Récupérer les checklists d'un utilisateur
 GET http://localhost:3000/api/checklists?utilisateurId=1
 Content-Type: application/json
+
+### Récupérer les impacts d'une checklist
+GET http://localhost:3000/api/checklists/10
+
+
+### Modifier le titre d'une checklist
+PUT http://localhost:3000/api/checklists/3/title
+Content-Type: application/json
+
+{
+    "nom_checklist": "Nouveau Titre de la Checklist"
+}
+
+### Modifier le statut d'une checklist-impact
+PUT http://localhost:3000/api/checklist-impacts/2/statut
+Content-Type: application/json
+
+{
+    "statut": "En cours"
+}
+
+
+
+
+
 
 
 

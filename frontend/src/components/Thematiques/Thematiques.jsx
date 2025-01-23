@@ -1,66 +1,35 @@
-import React, { useState } from 'react';
-import { Dropdown, DropdownButton, Badge } from 'react-bootstrap';
+import React from 'react';
+import Select from 'react-select';
+
+// Liste des thématiques
+const thematiques = [
+    { value: 1, label: "Techniques de mise en œuvre" },
+    { value: 2, label: "Durabilité / Construction durable / Circularité / Environnement" },
+    { value: 3, label: "Performance thermique / Energie / Isolation / Confort" },
+    { value: 4, label: "Etanchéité à l'air, à l'eau, à la vapeur d'eau" },
+    { value: 5, label: "Acoustique (petites copropriétés)" },
+    { value: 6, label: "Stabilité" },
+    { value: 7, label: "Pathologies" },
+    { value: 8, label: "Patrimoine / Restauration" },
+];
 
 const Thematiques = ({ onThematiqueSelect }) => {
-    const thematiques = [
-        { id: 1, nom: "Techniques de mise en œuvre" },
-        { id: 2, nom: "Durabilité / Construction durable / Circularité / Environnement" },
-        { id: 3, nom: "Performance thermique / Energie / Isolation / Confort" },
-        { id: 4, nom: "Etanchéité à l'air, à l'eau, à la vapeur d'eau" },
-        { id: 5, nom: "Acoustique (petites copropriétés)" },
-        { id: 6, nom: "Stabilité" },
-        { id: 7, nom: "Pathologies" },
-        { id: 8, nom: "Patrimoine / Restauration" },
-    ];
-
-    const [selectedThematiques, setSelectedThematiques] = useState([]);
-
-    const handleSelect = (thematique) => {
-        if (!selectedThematiques.some(t => t.id === thematique.id)) {
-            const newSelection = [...selectedThematiques, thematique];
-            setSelectedThematiques(newSelection);
-            onThematiqueSelect(newSelection.map(t => t.id)); // Passe les IDs au parent
-        }
-    };
-
-    const handleRemove = (id) => {
-        const updatedThematiques = selectedThematiques.filter(t => t.id !== id);
-        setSelectedThematiques(updatedThematiques);
-        onThematiqueSelect(updatedThematiques.map(t => t.id)); // Met à jour au parent
+    const handleChange = (selectedOptions) => {
+        // Récupère les IDs des thématiques sélectionnées
+        const selectedIds = selectedOptions ? selectedOptions.map(option => option.value) : [];
+        onThematiqueSelect(selectedIds); // Passe les IDs sélectionnés au parent
     };
 
     return (
         <div className="thematiques-container">
-            <DropdownButton
-                title="Thématique"
-                variant="outline-secondary"
-                className="w-100 mb-2 dropdown-thematiques"
-            >
-                {thematiques
-                    .filter(t => !selectedThematiques.some(sel => sel.id === t.id))
-                    .map(thematique => (
-                        <Dropdown.Item 
-                            key={thematique.id}
-                            onClick={() => handleSelect(thematique)}
-                        >
-                            {thematique.nom}
-                        </Dropdown.Item>
-                ))}
-            </DropdownButton>
-
-            <div className="selected-thematiques">
-                {selectedThematiques.map(thematique => (
-                    <Badge 
-                        key={thematique.id} 
-                        bg="secondary" 
-                        className="thematique-badge me-2 mb-2"
-                        onClick={() => handleRemove(thematique.id)}
-                        style={{ cursor: 'pointer' }}
-                    >
-                        {thematique.nom} ✕
-                    </Badge>
-                ))}
-            </div>
+            <Select
+                options={thematiques} // Liste des options
+                isMulti // Active la sélection multiple
+                placeholder="Sélectionnez une ou plusieurs thématiques..."
+                onChange={handleChange} // Appelle handleChange à chaque changement
+                className="react-select-container"
+                classNamePrefix="react-select"
+            />
         </div>
     );
 };

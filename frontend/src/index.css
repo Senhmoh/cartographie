@@ -11,6 +11,7 @@
 
 /* Styles généraux */
 html, body {
+  height: 100%; /* Assure que la hauteur de la page est bien de 100% */
   margin: 0;
   padding: 0;
   overflow-x: hidden;
@@ -31,6 +32,14 @@ body {
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Minimum : hauteur de la fenêtre */
+
+}
+
+.main-content {
+  flex: 1; /* Fait grandir la section principale pour remplir l'espace disponible */
 }
 
 /* Footer */
@@ -92,15 +101,23 @@ body {
   margin-top: 1rem;
 }
 
-/* Conteneur des impacts */
+.dropdown-item {
+  white-space: normal; /* Permet le retour à la ligne */
+  word-wrap: break-word; /* Coupe les mots si nécessaire */
+  max-width: 100%; /* Empêche le débordement horizontal */
+  overflow-wrap: break-word; /* Coupe les mots longs */
+}
+
+/* Ajout d'un espace entre chaque carte d'impact */
 .impact-card-container {
   margin-top: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 20px; /* Espace entre les cards */
 }
 
-/* Carte d'impact */
+/* Ajout de marges internes et externes pour les cards */
 .impact-card {
   background: #ffffff;
   border-radius: 12px;
@@ -108,6 +125,7 @@ body {
   padding: 20px;
   width: 100%;
   max-width: 600px;
+  margin-bottom: 20px; /* Espace inférieur pour chaque card */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -116,10 +134,42 @@ body {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
+/* Gestion responsive */
+@media (max-width: 768px) {
+  .impact-card {
+    padding: 15px;
+    margin-bottom: 15px; /* Réduit l'espace sur les petits écrans */
+  }
+
+  .impact-card-container {
+    gap: 15px; /* Réduit l'écart entre les cards sur petits écrans */
+  }
+}
+
+
+.impact-card-title {
+  margin-top: 5%;
+  font-size: 2rem; /* Taille du texte */
+  font-weight: bold; /* Gras pour le titre */
+  color: var(--secondary-color); /* Couleur personnalisée */
+  text-align: left; /* Alignement à gauche */
+}
+
+.impact-card-underline {
+  width: 50%; /* Largeur de la ligne sous le titre */
+  height: 2px; /* Épaisseur de la ligne */
+  background-color: var(--primary-color); /* Couleur personnalisée */
+  margin: 0; /* Pas d'espace autour de la ligne */
+  margin-left: 0; /* Aligne la ligne avec le titre */
+}
+
+
+
+
 /* Checkbox personnalisée */
 .impact-checkbox-label {
   display: flex;
-  align-items: center;
+  align-items: center; /* Aligne tous les éléments en haut */
   gap: 10px;
   cursor: pointer;
 }
@@ -131,6 +181,8 @@ body {
 .impact-checkbox-custom {
   width: 16px;
   height: 16px;
+  flex-shrink: 0; /* Empêche la réduction de la taille de la case */
+  vertical-align: middle; /* Aligne la case au milieu du texte */
   border: 2px solid var(--primary-color);
   border-radius: 3px;
   background-color: white;
@@ -143,8 +195,10 @@ body {
 }
 
 .impact-description {
-  color: var(--text-muted);
-  font-size: 0.95rem;
+  line-height: 1.5; /* Garde un espacement cohérent pour le texte */
+  flex-grow: 1; /* Permet au texte de prendre tout l'espace disponible */
+  overflow-wrap: break-word; /* Coupe les mots longs si nécessaire */
+  word-wrap: break-word; /* Compatibilité avec les anciens navigateurs */
 }
 
 .impact-importance {
@@ -152,26 +206,132 @@ body {
   color: var(--text-muted);
 }
 
+/* Espace entre la thématique et le premier impact */
+.impact-header {
+  margin-bottom: 10px; /* Espace léger sous la thématique */
+}
+
+/* Espace entre chaque impact */
+.impact-item {
+  margin-bottom: 10px; /* Espace léger entre les impacts */
+}
+
+/* Espace entre le dernier impact et l'importance */
+.impact-descriptions {
+  margin-bottom: 15px; /* Espace avant la section "Importance" */
+}
+
+/* Conteneur principal pour les cartes de checklist */
+.checklist-card-container {
+  margin: 0 auto; /* Centrer le conteneur */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* Espacement entre les cartes */
+  padding: 10px; /* Marges internes pour éviter que les cartes touchent les bords */
+  margin-bottom: 30px;
+}
+
+/* Style des cartes individuelles */
+.checklist-card {
+  background: #ffffff; /* Fond blanc */
+  border-radius: 12px; /* Coins arrondis */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre pour effet de profondeur */
+  padding: 20px; /* Espacement interne */
+  width: 100%;
+  max-width: 600px; /* Largeur maximale pour garantir la responsivité */
+  margin: 0 auto; /* Centrage automatique */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animation pour hover */
+}
+
+.checklist-card:hover {
+  transform: translateY(-5px); /* Légère élévation au survol */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Ombre accentuée */
+}
+
+/* Titre de la carte */
+.checklist-card-title {
+  font-size: 1.5rem; /* Taille du titre */
+  font-weight: bold; /* Mettre en gras */
+  color: #333; /* Couleur du texte */
+  margin-bottom: 10px; /* Espacement avec le contenu suivant */
+  word-wrap: break-word; /* Couper les mots trop longs */
+  word-break: break-word; /* Gérer les mots très longs */
+  overflow-wrap: break-word; /* Assurer la coupure sur les navigateurs modernes */
+  white-space: normal; /* Permettre les retours à la ligne */
+  line-height: 1.2; /* Espacement vertical */
+  max-width: 100%; /* Limiter à la largeur de la carte */
+}
+
+
+/* Date de la carte */
+.checklist-card-date {
+  font-size: 0.9rem; /* Texte plus petit */
+  color: #666; /* Couleur grise */
+  margin-bottom: 15px; /* Espacement avec le contenu suivant */
+}
+
+/* Section des thématiques */
+.checklist-thematiques {
+  margin-bottom: 15px; /* Espacement avec le contenu suivant */
+}
+
+.checklist-thematique-item {
+  font-size: 0.95rem; /* Taille du texte */
+  color: #444; /* Couleur personnalisée */
+  padding: 5px 0; /* Espacement interne */
+}
+
+/* Bouton d'action */
+.checklist-card-btn {
+  background-color: #38bfcc; /* Couleur principale */
+  color: #fff; /* Texte blanc */
+  border: none;
+  border-radius: 8px; /* Coins arrondis */
+  padding: 10px 20px; /* Taille du bouton */
+  font-size: 1rem; /* Taille du texte */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.checklist-card-btn:hover {
+  background-color: #2aa1b3; /* Couleur légèrement plus foncée */
+  transform: scale(1.05); /* Légère augmentation de la taille */
+}
+
+/* Responsivité pour les petits écrans */
+@media (max-width: 768px) {
+  .checklist-card {
+    padding: 15px; /* Réduire les marges internes */
+    max-width: 90%; /* Limiter la largeur sur petits écrans */
+  }
+
+  .checklist-card-container {
+    gap: 15px; /* Réduire l'espacement entre les cartes */
+  }
+}
+
+
+
+
 /* Boutons */
 .btn-submit {
-  width: 100%;
-  padding: 10px;
-  font-size: 1.1rem;
-  color: #fff;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--primary-color);
+  color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px; /* Coins légèrement arrondis */
+  padding: 10px 20px; /* Ajustement des dimensions internes */
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  font-size: 1rem; /* Taille de la police */
   cursor: pointer;
-  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-  transition: opacity 0.3s ease, transform 0.2s ease;
 }
-
-.btn-submit.btn-disabled {
-  background: #ccc;
-  cursor: not-allowed;
-}
-
-.btn-submit:hover:not(.btn-disabled) {
-  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+.btn-submit:hover {
+  background-color: var(--secondary-color);
+  transform: scale(1.05);
 }
 
 /* Autres styles */
@@ -297,36 +457,14 @@ body {
   color: var(--primary-color);
 }
 
-/* Conteneur principal des thématiques */
-.thematiques-container {
-  margin-bottom: 1rem;
-}
-
-/* Menu déroulant des thématiques */
-.dropdown-thematiques {
-  text-align: left;
-}
-
-/* Badges sélectionnés */
-.thematique-badge {
-  background-color: var(--primary-color);
-  color: white;
-  font-size: 0.9rem;
-  border-radius: 12px;
-  padding: 5px 10px;
-  transition: background-color 0.3s ease;
-}
-
-.thematique-badge:hover {
-  background-color: darken(var(--primary-color), 10%);
-}
-
 /* Conteneur principal */
 .house-container {
   position: relative;
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
   text-align: center;
+  margin-top: 1rem; /* Ajout d'un espacement avec les thématiques */
+  transition: margin 0.3s ease-in-out; /* Animation pour le déplacement fluide */
 }
 
 /* Image de la maison */
@@ -334,6 +472,10 @@ body {
   width: 100%;
   display: block;
   border-radius: 10px;
+}
+.house-container-wrapper {
+  margin-top: 1rem;
+  transition: margin 0.3s ease-in-out;
 }
 
 /* Styles communs pour les annotations */
@@ -374,7 +516,10 @@ body {
 .menuiseries-interieures { top: 20%; left: 55%; }
 .cloisons { top: 65%; left: 70%; }
 .revetements-sol { top: 83%; left: 50%; }
-.revetements-muraux { top: 40%; left: 40 }
+.revetements-muraux { top: 35%; left: 45% }
+.plomberie { top: 100%; left: 20%; }
+.electricite { top: 100%; left: 50%; }
+.hvac { top: 100%; left: 80%; }
 
 /* Conteneur principal des pages d'authentification */
 .auth-container {
@@ -386,7 +531,52 @@ body {
   background-color: var(--light-background);
 }
 
-/* Carte d'authentification */
+/* Ajout des styles pour la validation des critères de mot de passe */
+
+.password-criteria {
+  list-style-type: none;
+  padding: 0;
+  margin: 10px 0 0;
+  font-size: 0.9rem;
+}
+
+.password-criteria li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.password-criteria li.valid {
+  color: green;
+}
+
+.password-criteria li.invalid {
+  color: red;
+}
+
+/* Icônes pour les critères */
+.password-criteria li::before {
+  content: '\2713'; /* Checkmark */
+  display: inline-block;
+  margin-right: 8px;
+  color: inherit;
+}
+
+.password-criteria li.invalid::before {
+  content: '\2717'; /* Cross */
+  color: inherit;
+}
+
+/* Ajustement des autres styles pour une intégration harmonieuse */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: var(--light-background);
+}
+
 .auth-card {
   background: white;
   border-radius: 12px;
@@ -397,7 +587,6 @@ body {
   text-align: center;
 }
 
-/* Titres et sous-titres */
 .auth-title {
   font-size: 2rem;
   margin-bottom: 10px;
@@ -409,20 +598,19 @@ body {
   margin-bottom: 20px;
 }
 
-/* Formulaire */
-.auth-form .input-group {
+.input-group {
   margin-bottom: 20px;
   text-align: left;
 }
 
-.auth-form .input-group label {
+.input-group label {
   display: block;
   margin-bottom: 5px;
   color: var(--text-muted);
   font-size: 0.9rem;
 }
 
-.auth-form .input-group input {
+.input-group input {
   width: 100%;
   padding: 10px;
   border: 1px solid var(--primary-color);
@@ -431,9 +619,16 @@ body {
   transition: border-color 0.3s ease;
 }
 
-.auth-form .input-group input:focus {
+.input-group input:focus {
   border-color: var(--secondary-color);
   outline: none;
+}
+
+.error-text {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: -10px;
+  margin-bottom: 10px;
 }
 
 /* Boutons */
@@ -453,7 +648,6 @@ body {
   background: var(--secondary-color);
 }
 
-/* Pieds de formulaire */
 .auth-footer {
   margin-top: 20px;
   font-size: 0.9rem;
@@ -475,5 +669,214 @@ body {
   font-size: 1rem;
   color: var(--text-muted);
 }
+
+/* Bouton flottant rectangulaire */
+.floating-checklist-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px; /* Coins légèrement arrondis */
+  padding: 10px 20px; /* Ajustement des dimensions internes */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  font-size: 1rem; /* Taille de la police */
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.floating-checklist-btn:hover {
+  background-color: var(--secondary-color);
+  transform: scale(1.05);
+}
+
+/* Responsive pour PC */
+@media (min-width: 768px) {
+  .floating-checklist-btn {
+      position: static;
+      margin-top: 20px;
+      margin-bottom: 40px;
+      width: auto;
+      height: auto;
+      padding: 10px 30px; /* Plus de largeur */
+
+  }
+}
+
+.editable-title {
+  display: flex;
+  align-items: center; /* Centre verticalement le titre et les icônes */
+  justify-content: center; /* Centre horizontalement le contenu */
+  gap: 10px; /* Espacement entre les éléments */
+  max-width: 100%; /* Limite la largeur */
+  text-align: center; /* Centre le texte dans le conteneur */
+}
+
+.editable-title .title {
+  font-size: 1.5rem; /* Taille du texte */
+  word-wrap: break-word; /* Coupe les mots si nécessaire */
+  word-break: break-word; /* Coupe les mots pour les longues chaînes */
+  white-space: pre-wrap; /* Autorise les sauts de ligne */
+  max-width: 100%; /* Assure que le titre respecte la largeur de l'écran */
+  line-height: 1.2; /* Ajuste l'espacement vertical entre les lignes */
+  text-align: center; /* Centre le texte */
+}
+
+.editable-title .editable-input {
+  font-size: 1.5rem;
+  width: 100%; /* Utilise toute la largeur disponible */
+  max-width: 100%;
+  line-height: 1.2;
+  text-align: center; /* Centre le texte pendant l'édition */
+}
+
+.bi-pencil {
+  font-size: 1rem; /* Taille de l'icône crayon */
+  cursor: pointer;
+}
+
+.bi-save {
+  font-size: 1rem; /* Taille de l'icône disquette */
+  cursor: pointer;
+}
+
+
+@media (max-width: 768px) {
+  .editable-title .title {
+    font-size: 1.2rem; /* Réduit la taille de la police sur mobile */
+    max-width: 90%; /* Limite la largeur pour l'affichage mobile */
+  }
+
+  .editable-title .editable-input {
+    font-size: 1.2rem; /* Réduit la taille de l'entrée */
+    max-width: 90%; /* Limite la largeur de l'entrée */
+  }
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+  font-size: 1.5rem; /* Taille de la flèche */
+  margin-bottom: 10px; /* Espacement avec le titre */
+}
+
+.back-button i {
+  color: var(--primary-color);
+  transition: color 0.3s;
+}
+
+.back-button:hover i {
+  color: var(--secondary-color);
+}
+
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-top: 5%;
+  font-size: 2rem; /* Taille du texte */
+  color: var(--secondary-color); /* Couleur personnalisée */
+  text-align: left; /* Alignement à gauche */
+}
+
+.editable-title .bi-pencil {
+  font-size: 1rem; /* Taille du crayon */
+  color: var(--secondary-color); /* Couleur du crayon */
+  cursor: pointer;
+  margin-left: 10px; /* Espacement à gauche du crayon */
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.editable-title .bi-pencil:hover {
+  color: var(--primary-color); /* Couleur au survol */
+  transform: scale(1.1); /* Légère augmentation de taille au survol */
+}
+
+.statut-container {
+  display: flex;
+  flex-wrap: wrap; /* Permet de mieux gérer les options si elles débordent */
+  gap: 15px; /* Espacement entre les statuts */
+  align-items: center;
+}
+
+.statut-option input[type="checkbox"] {
+  appearance: none; /* Supprime le style par défaut */
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--secondary-color); /* Couleur de la bordure */
+  border-radius: 3px; /* Pour des bords carrés */
+  display: inline-block;
+  margin-right: 10px;
+  cursor: pointer;
+  position: relative;
+}
+
+.statut-option input[type="checkbox"]:checked {
+  background-color: var(--primary-color); /* Couleur de fond lorsqu'elle est cochée */
+  border-color: var(--secondary-color);
+}
+
+.statut-option input[type="checkbox"]:checked + .bi {
+  color: var(--white); /* Icône changée si nécessaire */
+}
+
+.statut-option .bi {
+  font-size: 1.2rem;
+  margin-left: 5px;
+}
+
+
+/* Overlay pour couvrir toute la page */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8); /* Fond semi-transparent */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* S'assurer qu'il est au-dessus de tout */
+}
+
+/* Spinner (cercle qui tourne) */
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(0, 0, 0, 0.1); /* Bordure grise */
+  border-top: 5px solid #007bff; /* Bordure bleue */
+  border-radius: 50%;
+  animation: spin 1s linear infinite; /* Animation de rotation */
+}
+
+/* Texte sous le spinner */
+.loading-text {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  color: #007bff;
+  font-weight: bold;
+}
+
+/* Animation de rotation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+
 
 

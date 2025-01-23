@@ -15,7 +15,6 @@ const AjoutImpact = () => {
 
     // Charger les données des menus déroulants
     useEffect(() => {
-        // Données statiques à utiliser pour les listes
         setMetiers([
             { id: 1, nom: 'Démolisseur et déconstructeur' },
             { id: 2, nom: 'Maçon / Façadier' },
@@ -41,11 +40,19 @@ const AjoutImpact = () => {
 
         setComposantes([
             { id: 1, nom: 'Façades' },
-            { id: 2, nom: 'Charpente - Toiture' },
-            { id: 3, nom: 'Murs mitoyens' },
-            { id: 4, nom: 'Murs porteurs intérieurs' },
-            { id: 5, nom: 'Dalles - Planchers' },
+            { id: 2, nom: 'Murs mitoyens' },
+            { id: 3, nom: 'Murs porteurs intérieurs' },
+            { id: 4, nom: 'Dalles - Planchers' },
+            { id: 5, nom: 'Charpente - Toiture' },
             { id: 6, nom: 'Escaliers' },
+            { id: 7, nom: 'Menuiseries extérieures' },
+            { id: 8, nom: 'Menuiseries intérieures' },
+            { id: 9, nom: 'Cloisons' },
+            { id: 10, nom: 'Revêtements de sol' },
+            { id: 11, nom: 'Revêtements muraux' },
+            { id: 12, nom: 'Plomberie' },
+            { id: 13, nom: 'Electricité' },
+            { id: 14, nom: 'HVAC' },
         ]);
     }, []);
 
@@ -56,18 +63,17 @@ const AjoutImpact = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3000/api/impacts', formData);
-            alert("Impact ajouté avec succès !");
-            setFormData({
+            await axios.post('http://localhost:3000/api/impacts', formData);
+            alert('Impact ajouté avec succès !');
+            // Réinitialiser uniquement les champs pertinents, sans effacer les sélections
+            setFormData((prevFormData) => ({
+                ...prevFormData,
                 impact: '',
-                importance: 1,
-                metier: '',
-                composante: '',
-                thematique: ''
-            });
+                importance: 1, // Réinitialiser à la priorité par défaut
+            }));
         } catch (error) {
-            console.error("Erreur lors de l'ajout de l'impact :", error);
-            alert("Une erreur est survenue lors de l'ajout.");
+            console.error('Erreur lors de l\'ajout de l\'impact :', error);
+            alert('Une erreur est survenue lors de l\'ajout.');
         }
     };
 

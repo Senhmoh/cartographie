@@ -1,84 +1,140 @@
 import React, { useState } from 'react';
 import { inscriptionUtilisateur } from '../../services/api'; // API pour l'inscription
+import { useAuth } from '../../providers/AuthProvider'; // Contexte Auth
 import { useNavigate } from 'react-router-dom';
 
 function SignupForm() {
-    const [formData, setFormData] = useState({ nom_utilisateur: '', email: '', mot_de_passe: '' });
+    const [formData, setFormData] = useState({
+        nom_utilisateur: '',
+        email: '',
+        mot_de_passe: '',
+        confirm_mot_de_passe: ''
+    });
+    const [passwordCriteria, setPasswordCriteria] = useState({
+        minLength: false,
+        hasNumber: false,
+        hasUpperCase: false
+    });
     const [error, setError] = useState('');
-    const [success, setSuccess] = useState(false);
+    const { login } = useAuth(); // Appel à login pour synchroniser l'état utilisateur
     const navigate = useNavigate();
 
+    // Gérer les changements dans les champs du formulaire
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+
+        // Mise à jour des critères de mot de passe
+        if (name === 'mot_de_passe') {
+            setPasswordCriteria({
+                minLength: value.length >= 10,
+                hasNumber: /\d/.test(value),
+                hasUpperCase: /[A-Z]/.test(value)
+            });
+        }
     };
 
+    // Validation des champs côté frontend avant soumission
+    const validateForm = () => {
+        if (!formData.nom_utilisateur || !formData.email || !formData.mot_de_passe || !formData.confirm_mot_de_passe) {
+            setError('Tous les champs sont requis.');
+            return false;
+        }
+        if (!/\S+@\S+\.\S+/.test(formData.email)) {
+            setError('Veuillez entrer un email valide.');
+            return false;
+        }
+        if (!passwordCriteria.minLength || !passwordCriteria.hasNumber || !passwordCriteria.hasUpperCase) {
+            setError('Le mot de passe ne remplit pas tous les critères requis.');
+            return false;
+        }
+        if (formData.mot_de_passe !== formData.confirm_mot_de_passe) {
+            setError('Les mots de passe ne correspondent pas.');
+            return false;
+        }
+        return true;
+    };
+
+    // Gestion de la soumission du formulaire
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!validateForm()) return;
+
         try {
-            await inscriptionUtilisateur(formData);
-            setSuccess(true);
+            await inscriptionUtilisateur({
+                nom_utilisateur: formData.nom_utilisateur,
+                email: formData.email,
+                mot_de_passe: formData.mot_de_passe
+            });
+            await login(); // Synchronise l'état utilisateur
             setError('');
+            navigate('/'); // Redirection vers la page d'accueil après inscription réussie
         } catch (err) {
             setError(err.message || 'Une erreur est survenue.');
         }
     };
 
-    const handleRedirect = () => {
-        navigate('/login');
-    };
-
     return (
         <div className="auth-container">
             <div className="auth-card">
-                {!success ? (
-                    <>
-                        <h1 className="auth-title gradient-text">Inscription</h1>
-                        <p className="auth-subtitle">Créez votre compte pour accéder à l'application</p>
-                        <form className="auth-form" onSubmit={handleSubmit}>
-                            <div className="input-group">
-                                <label htmlFor="nom_utilisateur">Nom d'utilisateur</label>
-                                <input
-                                    type="text"
-                                    id="nom_utilisateur"
-                                    name="nom_utilisateur"
-                                    value={formData.nom_utilisateur}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-                            <div className="input-group">
-                                <label htmlFor="email">Adresse mail</label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-                            <div className="input-group">
-                                <label htmlFor="mot_de_passe">Mot de passe</label>
-                                <input
-                                    type="password"
-                                    id="mot_de_passe"
-                                    name="mot_de_passe"
-                                    value={formData.mot_de_passe}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-                            {error && <p className="error-text">{error}</p>}
-                            <button type="submit" className="btn auth-btn">Créer un compte</button>
-                        </form>
-                    </>
-                ) : (
-                    <div className="auth-success">
-                        <h1 className="auth-title gradient-text">Inscription réussie</h1>
-                        <p className="auth-message">Votre compte a été créé avec succès.</p>
-                        <button onClick={handleRedirect} className="btn auth-btn">Se connecter</button>
+                <h1 className="auth-title gradient-text">Inscription</h1>
+                <p className="auth-subtitle">Créez votre compte pour accéder à l'application</p>
+                <form className="auth-form" onSubmit={handleSubmit}>
+                    <div className="input-group">
+                        <label htmlFor="nom_utilisateur">Nom d'utilisateur</label>
+                        <input
+                            type="text"
+                            id="nom_utilisateur"
+                            name="nom_utilisateur"
+                            value={formData.nom_utilisateur}
+                            onChange={handleChange}
+                            required
+                        />
                     </div>
-                )}
+                    <div className="input-group">
+                        <label htmlFor="email">Adresse mail</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="input-group">
+                        <label htmlFor="mot_de_passe">Mot de passe</label>
+                        <input
+                            type="password"
+                            id="mot_de_passe"
+                            name="mot_de_passe"
+                            value={formData.mot_de_passe}
+                            onChange={handleChange}
+                            required
+                        />
+                        <ul className="password-criteria">
+                            <li className={passwordCriteria.minLength ? 'valid' : 'invalid'}>Au moins 10 caractères</li>
+                            <li className={passwordCriteria.hasNumber ? 'valid' : 'invalid'}>Contient un chiffre</li>
+                            <li className={passwordCriteria.hasUpperCase ? 'valid' : 'invalid'}>Contient une majuscule</li>
+                        </ul>
+                    </div>
+                    <div className="input-group">
+                        <label htmlFor="confirm_mot_de_passe">Confirmer le mot de passe</label>
+                        <input
+                            type="password"
+                            id="confirm_mot_de_passe"
+                            name="confirm_mot_de_passe"
+                            value={formData.confirm_mot_de_passe}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    {error && <p className="error-text">{error}</p>}
+                    <button type="submit" className="btn auth-btn">Créer un compte</button>
+                </form>
+                <div className="auth-footer">
+                    <p>Déjà inscrit ? <a href="/login" className="auth-link">Connectez-vous</a></p>
+                </div>
             </div>
         </div>
     );

@@ -1,45 +1,37 @@
-import React, { useState } from 'react';
-import { Dropdown, DropdownButton } from 'react-bootstrap';
+import React from 'react';
+import Select from 'react-select';
+
+// Liste des métiers
+const metiers = [
+    { value: 1, label: "Démolisseur et déconstructeur" },
+    { value: 2, label: "Maçon / Façadier" },
+    { value: 3, label: "Charpentier / Monteur ossature en bois" },
+    { value: 4, label: "Couvreur / aide en couverture / Toiturier / Étancheur (toiture plate)" },
+    { value: 5, label: "Chauffagiste / HVAC / Ventiliste / Plombier / Poseur de canalisations et d'égouts / Sanitariste" },
+    { value: 6, label: "Électricien / Installateur de panneaux solaires / Spécialiste en domotique" },
+    { value: 7, label: "Carreleur / Chapiste" },
+    { value: 8, label: "Menuisier / Aide en menuiserie / Installateur de cloisons et faux-plafonds / Placeur de châssis" },
+    { value: 9, label: "Plafonneur / Plâtrier / Enduiseur" },
+];
 
 const Metiers = ({ onMetierSelect }) => {
-    // Liste des métiers avec des IDs
-    const metiers = [
-        { id: 1, nom: "Démolisseur et déconstructeur" },
-        { id: 2, nom: "Maçon / Façadier" },
-        { id: 3, nom: "Charpentier / Monteur ossature en bois" },
-        { id: 4, nom: "Couvreur / aide en couverture / Toiturier / Etancheur (toiture plate)" },
-        { id: 5, nom: "Chauffagiste / HVAC / Ventiliste / Plombier / Poseur de canalisations et d'égoûts / Sanitariste" },
-        { id: 6, nom: "Électricien / Installateur de panneaux solaires / Spécialiste en domotique" },
-        { id: 7, nom: "Carreleur / Chapiste" },
-        { id: 8, nom: "Menuisier / Aide en menuiserie / Installateur de cloisons et faux-plafonds / Placeur de châssis" },
-        { id: 9, nom: "Plafonneur / Plâtrier / Enduiseur" },
-    ];
-
-    const [selectedMetier, setSelectedMetier] = useState('Métiers');
-
-    // Gestion de la sélection
-    const handleSelect = (metier) => {
-        setSelectedMetier(metier.nom); // Afficher le nom sélectionné
-        if (onMetierSelect) {
-            onMetierSelect(metier.id); // Passer l'ID au parent
-        }
+    const handleChange = (selectedOption) => {
+        // Récupère l'ID du métier sélectionné
+        const selectedId = selectedOption ? selectedOption.value : null;
+        onMetierSelect(selectedId); // Passe l'ID sélectionné au parent
     };
 
     return (
-        <DropdownButton
-            title={selectedMetier}
-            variant="outline-secondary"
-            className="w-100 text-center my-2"
-        >
-            {metiers.map((metier) => (
-                <Dropdown.Item
-                    key={metier.id}
-                    onClick={() => handleSelect(metier)}
-                >
-                    {metier.nom}
-                </Dropdown.Item>
-            ))}
-        </DropdownButton>
+        <div className="metiers-container">
+            <Select
+                options={metiers} // Liste des options
+                placeholder="Sélectionnez un métier..."
+                onChange={handleChange} // Appelle handleChange à chaque changement
+                className="react-select-container"
+                classNamePrefix="react-select"
+                isClearable // Permet de réinitialiser la sélection
+            />
+        </div>
     );
 };
 

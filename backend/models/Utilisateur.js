@@ -25,8 +25,13 @@ const Utilisateur = sequelize.define('Utilisateur', {
         allowNull: false,
         validate: { notEmpty: true },
     },
+    admin: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+    },    
 }, {
-    tableName: 'utilisateurs',
+    tableName: 'utilisateurs_old',
     schema: 'public',
     timestamps: false,
 });

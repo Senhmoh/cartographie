@@ -101,16 +101,19 @@ const Home = () => {
             
             {/* Section avec container pour les filtres */}
             <div className="container">
-                <div className="row justify-content-center align-items-center my-3">
-                    <div className="col-6 col-sm-5 col-md-4">
-                        <Thematiques onThematiqueSelect={(ids) => setSelectedThematiqueIds(ids)} />
-                    </div>
-                    <div className="col-6 col-sm-5 col-md-4">
-                        <Metiers onMetierSelect={(id) => setSelectedMetierId(id)} />
-                    </div>
-                </div>
+            <div className="row justify-content-center align-items-start my-3">
+    <div className="col-12 col-sm-6 col-md-4 mb-3">
+        <Thematiques onThematiqueSelect={(ids) => setSelectedThematiqueIds(ids)} />
+    </div>
+    <div className="col-12 col-sm-6 col-md-4">
+        <Metiers onMetierSelect={(id) => setSelectedMetierId(id)} />
+    </div>
+</div>
+
     
-                <House onComposanteSelect={(id) => setSelectedComposanteId(id)} />
+<div className="house-container-wrapper">
+    <House onComposanteSelect={(id) => setSelectedComposanteId(id)} />
+</div>
     
                 <div className="mt-4">
                     {loading ? (

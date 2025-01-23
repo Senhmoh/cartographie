@@ -6,20 +6,44 @@ import { useNavigate } from 'react-router-dom';
 function LoginForm() {
     const [formData, setFormData] = useState({ email: '', mot_de_passe: '' });
     const [error, setError] = useState('');
-    const { login } = useAuth(); // Gestion du token utilisateur
+    const { login } = useAuth(); // Gestion de la connexion utilisateur
     const navigate = useNavigate();
 
+    // Gérer les changements dans les champs du formulaire
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    // Validation des champs côté frontend avant soumission
+    const validateForm = () => {
+        if (!formData.email || !formData.mot_de_passe) {
+            setError('Tous les champs sont requis.');
+            return false;
+        }
+        if (!/\S+@\S+\.\S+/.test(formData.email)) {
+            setError('Veuillez entrer un email valide.');
+            return false;
+        }
+        return true;
+    };
+
+    // Gestion de la soumission du formulaire
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!validateForm()) return;
+    
         try {
-            const data = await connexionUtilisateur(formData);
-            login(data.token);
+            await connexionUtilisateur({
+                email: formData.email,
+                mot_de_passe: formData.mot_de_passe,
+            });
+            
+            // Utilisation du contexte pour synchroniser l'état utilisateur
+            await login();
+    
+            // Nettoyage des erreurs et redirection après succès
             setError('');
-            navigate('/'); // Redirection après connexion
+            navigate('/');
         } catch (err) {
             setError(err.message || 'Identifiants incorrects.');
         }
@@ -57,12 +81,18 @@ function LoginForm() {
                     <button type="submit" className="btn auth-btn">Connexion</button>
                 </form>
                 <div className="auth-footer">
-                    <a href="#!" className="auth-link">Mot de passe oublié ?</a>
-                    <p>Pas encore inscrit ? <a href="/inscription" className="auth-link">Créez un compte</a></p>
+                    {/* Lien vers "Mot de passe oublié" */}
+                    <p>
+                        <a href="/forgot-password" className="auth-link">Mot de passe oublié ?</a>
+                    </p>
+                    <p>
+                        Pas encore inscrit ? <a href="/inscription" className="auth-link">Créez un compte</a>
+                    </p>
                 </div>
             </div>
         </div>
     );
+    
 }
 
 export default LoginForm;
