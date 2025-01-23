@@ -876,7 +876,67 @@ body {
   }
 }
 
+.gdpr-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  border-radius: 8px;
+}
 
+.gdpr-title {
+  margin-top: 5%;
+  font-size: 2rem; /* Taille du texte */
+  font-weight: bold; /* Gras pour le titre */
+  color: var(--secondary-color); /* Couleur personnalisée */
+  text-align: left; /* Alignement à gauche */
+}
 
+.gdpr-underline {
+  width: 50%; /* Largeur de la ligne sous le titre */
+  height: 2px; /* Épaisseur de la ligne */
+  background-color: var(--primary-color); /* Couleur personnalisée */
+  margin: 0; /* Pas d'espace autour de la ligne */
+  margin-left: 0; /* Aligne la ligne avec le titre */
+}
+
+.gdpr-section {
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+.gdpr-subtitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.gdpr-container p,
+.gdpr-container address {
+  font-size: 1rem;
+  margin: 0 0 10px;
+}
+
+.gdpr-container address {
+  font-style: normal;
+  color: #444;
+}
+
+.gdpr-container a {
+  color: #1a73e8;
+  text-decoration: none;
+}
+
+.gdpr-container a:hover {
+  text-decoration: underline;
+}
 
 

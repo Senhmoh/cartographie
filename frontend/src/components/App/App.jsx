@@ -11,6 +11,7 @@ import NotFoundPage from '../NotFoundPage/NotFoundPage'; // Page 404
 import { AuthProvider, useAuth } from '../../providers/AuthProvider';
 import ForgotPassword from '../Password/ForgotPassword';
 import ChecklistDetails from '../Profil/ChecklistDetails';
+import GDPRPage from '../GDPR/GdprPage';
 
 // Composant pour protéger les routes
 function ProtectedRoute({ children, requiredRole }) {
@@ -48,6 +49,7 @@ function App() {
                             <Route path="/login" element={<Login />} />
                             <Route path="/inscription" element={<Inscription />} />
                             <Route path="/forgot-password" element={<ForgotPassword />} />
+                            <Route path="/privacy" element={<GDPRPage />} />
                             <Route
                                 path="/ajout"
                                 element={

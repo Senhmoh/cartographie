@@ -29,7 +29,11 @@ const Utilisateur = sequelize.define('Utilisateur', {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,
-    },    
+    },  
+    formation: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+    },  
 }, {
     tableName: 'utilisateurs_old',
     schema: 'public',

@@ -121,7 +121,7 @@ export const AuthProvider = ({ children }) => {
     
     const refreshAccessToken = async () => {
         try {
-            const response = await fetch(`${import.meta.env._URL}/api/auth/refresh-token`, {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/refresh-token`, {
                 method: 'POST',
                 credentials: 'include',
             });

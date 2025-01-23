@@ -8,7 +8,9 @@ function SignupForm() {
         nom_utilisateur: '',
         email: '',
         mot_de_passe: '',
-        confirm_mot_de_passe: ''
+        confirm_mot_de_passe: '',
+        rgpd_accepted: false,
+        formation_accepted: false // Nouvelle clé ajoutée
     });
     const [passwordCriteria, setPasswordCriteria] = useState({
         minLength: false,
@@ -21,8 +23,8 @@ function SignupForm() {
 
     // Gérer les changements dans les champs du formulaire
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        const { name, value, type, checked } = e.target;
+        setFormData({ ...formData, [name]: type === 'checkbox' ? checked : value });
 
         // Mise à jour des critères de mot de passe
         if (name === 'mot_de_passe') {
@@ -52,6 +54,10 @@ function SignupForm() {
             setError('Les mots de passe ne correspondent pas.');
             return false;
         }
+        if (!formData.rgpd_accepted) {
+            setError('Vous devez accepter les conditions RGPD pour continuer.');
+            return false;
+        }
         return true;
     };
 
@@ -64,7 +70,8 @@ function SignupForm() {
             await inscriptionUtilisateur({
                 nom_utilisateur: formData.nom_utilisateur,
                 email: formData.email,
-                mot_de_passe: formData.mot_de_passe
+                mot_de_passe: formData.mot_de_passe,
+                formation: formData.formation_accepted
             });
             await login(); // Synchronise l'état utilisateur
             setError('');
@@ -128,6 +135,30 @@ function SignupForm() {
                             onChange={handleChange}
                             required
                         />
+                    </div>
+                    <div className="input-group rgpd-group">
+                        <input
+                            type="checkbox"
+                            id="rgpd_accepted"
+                            name="rgpd_accepted"
+                            checked={formData.rgpd_accepted}
+                            onChange={handleChange}
+                        />
+                        <label htmlFor="rgpd_accepted">
+                            J'accepte les <a href="/privacy" target="_blank" className="auth-link">conditions générales RGPD</a>
+                        </label>
+                    </div>
+                    <div className="input-group rgpd-group">
+                        <input
+                                  type="checkbox"
+                                  id="formation_accepted"
+                                  name="formation_accepted"
+                                  checked={formData.formation_accepted}
+                                  onChange={handleChange}
+                        />
+                        <label htmlFor="formation_accepted">
+                            J'accepte que mes données soient utilisées à des fins de formation (facultatif)
+                        </label>
                     </div>
                     {error && <p className="error-text">{error}</p>}
                     <button type="submit" className="btn auth-btn">Créer un compte</button>

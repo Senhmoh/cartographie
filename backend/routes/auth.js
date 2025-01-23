@@ -62,13 +62,14 @@ router.post('/inscription', [
         .isLength({ min: 10 }).withMessage('Le mot de passe doit contenir au moins 10 caractères.')
         .matches(/[A-Z]/).withMessage('Le mot de passe doit contenir au moins une majuscule.')
         .matches(/\d/).withMessage('Le mot de passe doit contenir au moins un chiffre.')
+    
 ], async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
 
-    const { nom_utilisateur, email, mot_de_passe } = req.body;
+    const { nom_utilisateur, email, mot_de_passe, formation } = req.body;
 
     try {
         const utilisateurExistant = await Utilisateur.findOne({ where: { email } });
@@ -82,6 +83,7 @@ router.post('/inscription', [
             nom_utilisateur,
             email,
             mot_de_passe: hashedPassword,
+            formation
         });
 
         res.status(201).json({ message: 'Utilisateur créé avec succès.' });
