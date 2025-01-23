@@ -46,7 +46,7 @@ app.use(session({
     cookie: {
         httpOnly: true, // Empêche l'accès via JavaScript
         secure: process.env.NODE_ENV === 'production', // Seulement HTTPS en production
-        sameSite: 'strict', // Empêche l'envoi de cookies à partir d'autres sites
+        sameSite: 'none', // Empêche l'envoi de cookies à partir d'autres sites
     },
 }));
 
