@@ -291,6 +291,7 @@ router.get('/test-cookies', (req, res) => {
     });
 
     res.status(200).json({ message: 'Cookie défini avec succès.' });
+    console.log('Cookies définis avec succès:', res.getHeaders()['set-cookie']);
 });
 
 
