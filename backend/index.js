@@ -1,6 +1,4 @@
 import express from 'express';
-import pkg from 'pg';
-const { Client } = pkg;
 import path from 'path';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -13,23 +11,28 @@ import sequelize from './config/database.js';
 import './models/Associations.js';
 import './config/passport.js';
 import { cleanExpiredTokens } from './routes/auth.js';
-import Redis from 'ioredis';
-import * as connectRedis from 'connect-redis';
+import { createClient } from 'redis';
+import connectRedis from 'connect-redis';
 import { fileURLToPath } from 'url';
 
 // Configurer __dirname pour ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Initialiser Redis
-const RedisStore = connectRedis(session);
-const redisClient = new Redis({
-    host: process.env.REDIS_HOST || 'localhost',
-    port: process.env.REDIS_PORT || 6379,
-});
-
 // Initialiser dotenv
 dotenv.config();
+
+// Créez le client Redis
+const redisClient = createClient({
+    url: `redis://${process.env.REDISHOST || 'localhost'}:${process.env.REDISPORT || 6379}`,
+    legacyMode: true, // Assure la compatibilité avec connect-redis
+});
+
+// Connectez Redis
+redisClient.connect().catch(console.error);
+
+// Configurez RedisStore
+const RedisStore = connectRedis(session);
 
 // Initialiser Express
 const app = express();
@@ -40,27 +43,31 @@ app.use(cookieParser());
 app.use(express.json());
 
 // Configuration des sessions
-app.use(session({
-    store: new RedisStore({ client: redisClient }),
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        secure: process.env.NODE_ENV === 'production',
-        httpOnly: true,
-        sameSite: 'lax',
-    },
-}));
+app.use(
+    session({
+        store: new RedisStore({ client: redisClient }),
+        secret: process.env.SESSION_SECRET,
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            secure: process.env.NODE_ENV === 'production',
+            httpOnly: true,
+            sameSite: 'lax',
+        },
+    })
+);
 
 // Initialisation de Passport.js
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Configuration CORS
-app.use(cors({
-    origin: ['http://localhost:5173', 'https://cartographie-flax.vercel.app', 'https://renov-impact.be'],
-    credentials: true,
-}));
+app.use(
+    cors({
+        origin: ['http://localhost:5173', 'https://cartographie-flax.vercel.app', 'https://renov-impact.be'],
+        credentials: true,
+    })
+);
 
 // Routes API
 app.use('/api', apiRoutes);
