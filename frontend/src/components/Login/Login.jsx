@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connexionUtilisateur } from '../../services/api'; // API pour la connexion
 import { useAuth } from '../../providers/AuthProvider'; // Contexte Auth
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 function LoginForm() {
     const [formData, setFormData] = useState({ email: '', mot_de_passe: '' });
@@ -83,10 +83,10 @@ function LoginForm() {
                 <div className="auth-footer">
                     {/* Lien vers "Mot de passe oublié" */}
                     <p>
-                        <a href="/forgot-password" className="auth-link">Mot de passe oublié ?</a>
+                        <Link to="/forgot-password" className="auth-link">Mot de passe oublié ?</Link>
                     </p>
                     <p>
-                        Pas encore inscrit ? <a href="/inscription" className="auth-link">Créez un compte</a>
+                        Pas encore inscrit ? <Link to="/inscription" className="auth-link">Créez un compte</Link>
                     </p>
                 </div>
             </div>
