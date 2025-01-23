@@ -11,7 +11,7 @@ import NotFoundPage from '../NotFoundPage/NotFoundPage'; // Page 404
 import { AuthProvider, useAuth } from '../../providers/AuthProvider';
 import ForgotPassword from '../Password/ForgotPassword';
 import ChecklistDetails from '../Profil/ChecklistDetails';
-import GDPRPage from '../GDPR/GdprPage';
+import GDPRPage from '../GDPR/GDPRPage';
 
 // Composant pour protéger les routes
 function ProtectedRoute({ children, requiredRole }) {
