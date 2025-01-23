@@ -62,6 +62,27 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
+app.use((req, res, next) => {
+  console.log('Cookies reçus :', req.cookies);
+  next();
+});
+
+app.use(cors({
+  origin: (origin, callback) => {
+    console.log('Requête provenant de :', origin);
+    callback(null, true);
+  },
+  credentials: true,
+}));
+
+
+app.use((req, res, next) => {
+  console.log('Session utilisateur :', req.session);
+  console.log('Utilisateur Passport :', req.user);
+  next();
+});
+
+
 // Middleware pour lire le JSON dans les requêtes
 app.use(express.json());
 
