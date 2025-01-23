@@ -131,14 +131,14 @@ router.post('/connexion', [
         res.cookie('accessToken', accessToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: 'none',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // none pour production, lax pour dev
             maxAge: 15 * 60 * 1000, // 15 minutes
         });
 
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: 'none',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // none pour production, lax pour dev
             maxAge: 7 * 24 * 60 * 60 * 1000, // 7 jours
         });
 
@@ -173,7 +173,7 @@ router.post('/refresh-token', async (req, res) => {
         res.cookie('accessToken', accessToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: 'none',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // none pour production, lax pour dev
             maxAge: 15 * 60 * 1000, // 15 minutes
         });
 
