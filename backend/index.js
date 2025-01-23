@@ -11,9 +11,7 @@ import sequelize from './config/database.js';
 import './models/Associations.js';
 import './config/passport.js';
 import { cleanExpiredTokens } from './routes/auth.js';
-import { createClient } from 'redis';
 import { fileURLToPath } from 'url';
-import { createRequire } from 'module'; // Importe createRequire pour utiliser require
 
 // Configurer __dirname pour ES Modules
 const __filename = fileURLToPath(import.meta.url);
@@ -21,22 +19,6 @@ const __dirname = path.dirname(__filename);
 
 // Initialiser dotenv
 dotenv.config();
-
-// Utilise createRequire pour importer connect-redis
-const require = createRequire(import.meta.url);
-const connectRedis = require('connect-redis');
-
-// Créez le client Redis
-const redisClient = createClient({
-    url: `redis://${process.env.REDISHOST || 'localhost'}:${process.env.REDISPORT || 6379}`,
-    legacyMode: true, // Assure la compatibilité avec connect-redis
-});
-
-// Connectez Redis
-redisClient.connect().catch(console.error);
-
-// Configurez RedisStore
-const RedisStore = connectRedis(session);
 
 // Initialiser Express
 const app = express();
@@ -48,17 +30,16 @@ app.use(express.json());
 
 // Configuration des sessions
 app.use(
-    session({
-        store: new RedisStore({ client: redisClient }),
-        secret: process.env.SESSION_SECRET,
-        resave: false,
-        saveUninitialized: false,
-        cookie: {
-            secure: process.env.NODE_ENV === 'production',
-            httpOnly: true,
-            sameSite: 'none',
-        },
-    })
+  session({
+      secret: process.env.SESSION_SECRET,
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+          secure: process.env.NODE_ENV === 'production',
+          httpOnly: true,
+          sameSite: 'none',
+      },
+  })
 );
 
 // Initialisation de Passport.js
