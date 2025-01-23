@@ -12,7 +12,7 @@ import './models/Associations.js';
 import './config/passport.js';
 import { cleanExpiredTokens } from './routes/auth.js';
 import { createClient } from 'redis';
-import connectRedis from 'connect-redis'; // Import corrigé
+import connectRedis from 'connect-redis'; // Aucune mention de .default
 import { fileURLToPath } from 'url';
 
 // Configurer __dirname pour ES Modules
@@ -31,8 +31,8 @@ const redisClient = createClient({
 // Connectez Redis
 redisClient.connect().catch(console.error);
 
-// Configurez RedisStore
-const RedisStore = connectRedis(session); // Suppression de .default
+// Configurez RedisStore avec connect-redis
+const RedisStore = connectRedis(session);
 
 // Initialiser Express
 const app = express();
