@@ -47,7 +47,7 @@ function LoginForm() {
     
         try {
             // Activer les cookies avant de soumettre
-            await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/test-cookies`, {
+            await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/test-cookies`, {
                 credentials: 'include',
             });
     
