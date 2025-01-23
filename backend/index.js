@@ -14,7 +14,7 @@ import './models/Associations.js';
 import './config/passport.js';
 import { cleanExpiredTokens } from './routes/auth.js';
 import Redis from 'ioredis';
-import connectRedis from 'connect-redis';
+import * as connectRedis from 'connect-redis';
 import { fileURLToPath } from 'url';
 
 // Configurer __dirname pour ES Modules
