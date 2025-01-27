@@ -281,20 +281,5 @@ router.post('/forgot-password', async (req, res) => {
     }
 });
 
-router.get('/test-cookies', (req, res) => {
-    console.log('Requête reçue dans /test-cookies');
-    console.log('Headers reçus :', req.headers);
-
-    res.cookie('testCookie', 'testValue', {
-        httpOnly: true,
-        secure: true,
-        sameSite: 'none',
-        maxAge: 60 * 1000, // 1 minute
-    });
-
-    res.status(200).json({ message: 'Cookie défini avec succès.' });
-});
-
-
 
 export default router;
